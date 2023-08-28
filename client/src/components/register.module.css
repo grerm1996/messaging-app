@@ -1,0 +1,9 @@
+.registerform {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+label {
+    letter-spacing: 2px;
+}

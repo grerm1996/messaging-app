@@ -1,0 +1,7 @@
+.textarea {
+    font-size: 1.4rem;
+}
+
+.messageinput {
+    grid-column: 2/3;
+}

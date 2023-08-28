@@ -1,0 +1,12 @@
+.header {
+    width: 100%;
+    height: 100%;
+    position: sticky;
+    top: 0;
+    grid-column: 2/3;
+}
+
+.headertitle {
+    padding: 3px;
+    margin: 0px;
+}
