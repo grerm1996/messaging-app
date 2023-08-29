@@ -37,10 +37,10 @@ function Chat(props) {
           <div className={style.gridcontainer}>
             < Header userData={userData}/>
             
-              < Contacts userData={userData}/>
+              < Contacts userData={userData} setUserData={setUserData}/>
               < MessageInput />
           </div>
-        : <h1>fuck off</h1>
+        : <h1>not allowed</h1>
     )
 
 };

@@ -16,8 +16,8 @@ const UserSchema = new Schema({
 });
 
 const ConvoSchema = new Schema({
-  participants: { type: String, required: true },
-  convoid: {type: String, required: true}
+  participants: { type: Array, required: true },
+  convoId: {type: String, required: true}
 })
 
 const Users = mongoose.model("users", UserSchema);
