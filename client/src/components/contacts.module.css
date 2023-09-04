@@ -2,9 +2,31 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+}
+
+.contact-clickable:hover {
+    background-color: grey;
 }
 
 .contact-list {
     list-style: none;
-    padding-left: 0
+    padding-left: 0;
+    font-size: 1.3rem
+}
+
+.contact-list li:hover {
+    cursor: pointer
+}
+
+.deleteContactBtn:hover {
+    cursor: pointer;
+    color: red
+}
+
+.deleteContactBtn {
+    color: rgb(247, 100, 100);
+    transition: transform .2s ease-in-out; 
+    transform: scale(1.0); 
+
 }

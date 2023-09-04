@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import style from './contacts.module.css';
+import PropTypes from 'prop-types';
+
 
 function Contacts(props) {
 
     const [newContactName, setNewContactName] = useState('');
 
-    const handleAddContact = async () => {
-        
-        
+    const handleAddContact = async (e) => {
+        e.preventDefault();
         console.log(props.userData._id);
         try {
             const response = await fetch(`http://localhost:4000/contacts/add/${props.userData._id}`, {
@@ -22,10 +23,11 @@ function Contacts(props) {
 
             if (response.ok) {
                 const responseData = await response.json();
-                console.log(responseData);
+                console.log('responseData: ', responseData);
+                console.log('convo id is', responseData.convoId);
                 console.log('your contact list: ', responseData.user.contacts);
-                props.setUserData({...props.userData, contacts: [...props.userData.contacts, newContactName]})
-            
+                props.setUserData({...props.userData, contacts: [...props.userData.contacts, {username: newContactName, convoId: responseData.convoId}]})
+                console.log(props.userData);
             } else {
                 setNewContactName('');
             const errorData = await response.json();
@@ -57,7 +59,7 @@ function Contacts(props) {
                 console.log(responseData);
                 console.log('your contact list: ', responseData.user.contacts);
                 const newArray = props.userData.contacts;
-                const indexToRemove = newArray.indexOf(contactToDelete);
+                const indexToRemove = newArray.findIndex(contact => contact.username === contactToDelete);
                 if (indexToRemove !== -1) {
                     newArray.splice(indexToRemove, 1);
                     props.setUserData({...props.userData, contacts: newArray})
@@ -71,25 +73,63 @@ function Contacts(props) {
         } catch (error) {
             console.error("Error during remove contact:", error);
         }
-
     }
 
+    const selectConvo = async (convoId) => {
+        if (props.currentConvo) {
+            props.exitRoom(props.currentConvo.convoId)
+        }
+        props.joinRoom(convoId);
+        console.log(convoId);
+        try {
+            const response = await fetch(`http://localhost:4000/messages/${convoId}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              credentials: "include"
+            });
+        
+            if (!response.ok) {
+              throw new Error('Request failed');
+            }
+        
+            const data = await response.json();
+            console.log('received data: ', data);
+            props.setCurrentConvo(data.convoObj);
+            props.setConvoMessages(data.messages);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+
+        
+
+    }
 
     return(
         <div className={style.contacts}>
             <label>Contacts:</label>
             <ul className={style['contact-list']}>
                 {props.userData.contacts.map((contact)=> 
-                <li key={contact}>{contact} <span onClick={({})=> deleteContact(contact)}>X</span></li>)}
+                <li key={contact._id} >
+                    <span className={style['contact-clickable']} onClick={() => selectConvo(contact.convoId)}>{contact.username}</span>
+                    <span className={style.deleteContactBtn} onClick={({})=> deleteContact(contact.username)}> ×</span>
+                </li>)}
             </ul>
-            <label htmlFor="add-contact">Add new contact </label>
-            <input id='add-contact' name='add-contact' onChange={(e)=>setNewContactName(e.target.value)} value={newContactName} placeholder="username"></input>
-            <button onClick={handleAddContact} className={style.addContactBtn}>Add Contact</button>
+            <form className={style.contacts} autoComplete='off' >
+                <input id='add-contact' name='add-contact' onChange={(e)=>setNewContactName(e.target.value)} value={newContactName} placeholder="Enter new contact"></input>
+                <button onClick={handleAddContact} className={style.addContactBtn}>Add Contact</button>
+            </form>
 
             
         </div>
-    )
+    )    
 
 }
+
+Contacts.propTypes = {
+    userData: PropTypes.object,
+}
+
 
 export default Contacts

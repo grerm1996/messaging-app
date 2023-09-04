@@ -1,0 +1,41 @@
+.convo-div-container {
+    display: flex;
+    justify-content: center;
+    height: calc(100vh - 200px);
+    padding-top: 10px
+}
+
+.convo-div {
+    border: 2px solid black;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column-reverse;
+    height: 100%;
+    width: 800px;
+    overflow-y: scroll;
+}
+
+.convo-div p {
+    padding: 6px 10px;
+    border-radius: 5px;
+    margin: 10px;
+    max-width: 550px;
+}
+
+.sent-text {
+    display: flex;
+    justify-content: right;
+}
+.sent-text p {
+    background-color: greenyellow;
+}
+
+.received-text p {
+    background-color: rgb(209, 209, 209);
+    
+}
+
+.received-text {
+    display: flex;
+    justify-content: left;
+}

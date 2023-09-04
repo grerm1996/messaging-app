@@ -10,15 +10,57 @@ const app = express();
 const router = express.Router()
 const { Users } = require("./models");
 require('dotenv').config()
+const http = require('http').createServer(app);
+const io = require('socket.io')(http, {
+  cors: {
+    origin: ['http://localhost:5173', 'https://admin.socket.io'],
+    credentials: true, 
+  },
+});
+const { instrument } = require("@socket.io/admin-ui")
+
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
 const mongoDb = process.env.MONGO_URL
 mongoose.connect(mongoDb, { useUnifiedTopology: true, useNewUrlParser: true })
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
 
+io.on('connection', (socket) => {
+  console.log(`User connected with socket ID: ${socket.id}`);
+
+  socket.on('chat-message-in', (message, convoId) => {
+    console.log(`User ${socket.id} sending message to conversation ${convoId}: ${message.msgtext}`);
+    io.in(convoId).emit('chat-message-out', message, (error) => {
+      if (error) {
+        console.error('Error sending message:', error);
+      } else {
+        console.log('Message sent successfully');
+      }
+    });
+    
+  });
+
+  socket.on('join-room', (convoId) => {
+    console.log(`User ${socket.id} joined conversation ${convoId}`);
+    socket.join(convoId);
+  });
+
+  socket.on('exit-room', (convoId) => {
+    console.log(`User ${socket.id} has left conversation ${convoId}`);
+    socket.leave(convoId);
+  });
+
+
+  socket.on('disconnect', () => {
+    console.log(`User ${socket.id} disconnected`)
+  });
+});
+
+instrument(io, {
+  auth: false,
+});
 // Middleware
 
-/* require("./passport-config")(passport); */
 const initializePassport = require('./passport-config')
 initializePassport(passport)
 
@@ -37,7 +79,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
-app.use(cors({ credentials: true, origin: 'http://localhost:5173' }))
+app.use(cors({ credentials: true, origin: ['http://localhost:5173'] }))
 app.use(express.urlencoded({ extended: false }))
 
 app.use(session({
@@ -58,9 +100,15 @@ const loginRouter = require('./routes/login-routes')
 app.use('/login', loginRouter)
 const contactRouter = require('./routes/contact-routes')
 app.use('/contacts', contactRouter)
+const messageRouter = require('./routes/message-routes')
+app.use('/messages', messageRouter)
 
 //----------------------------------------- END OF ROUTES---------------------------------------------------
 //Start Server
 app.listen(4000, () => {
   console.log("server listening on port 4000");
+});
+
+http.listen(3000, () => {
+  console.log("socket listening on port 3000");
 });

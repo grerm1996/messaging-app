@@ -3,16 +3,20 @@ const { Schema } = mongoose;
 
 const MessageSchema = new Schema({
   msgtext: { type: String, required: true },
-  user: { type: String, required: true },
+  sender: { type: String, required: true },
   recipient: { type: String, required: true },
   date: Date,
+  convoId: {type: String, required: true}
 })
 
 
 const UserSchema = new Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
-  contacts: { type: Array }
+  contacts: [{
+    username: { type: String, required: true },
+    convoId: { type: String }
+  }]
 });
 
 const ConvoSchema = new Schema({

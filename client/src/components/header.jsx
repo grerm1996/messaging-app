@@ -29,7 +29,7 @@ function Header(props) {
 
     return (
         <div className={style.header}>
-            <h1 className={style.headertitle}>r. v. chatman</h1>
+            {/* <h1 className={style.headertitle}>r. v. chatman</h1> */}
             <p>You are currently logged in as <strong>{props.userData.username}</strong>.  <a onClick={handleLogout}>Logout?</a></p>
         </div>
     )

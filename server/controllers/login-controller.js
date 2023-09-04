@@ -67,7 +67,6 @@ const register = async (req, res) => {
 
 const sendUser = (req, res) => {
     console.log(req.user)
-    console.log('hello')
     if (req.user) {
         res.status(200).send(req.user)
     } else res.status(404).send('sorry')

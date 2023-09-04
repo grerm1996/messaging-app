@@ -89,7 +89,7 @@ const handleLogout = async (e) => {
   };
 
     return (
-      <>
+      <div>
 
         <h2>Please sign in</h2>
         <p>Don't have an account? <a onClick={props.toggleDisplay}>Register here.</a></p>
@@ -107,7 +107,7 @@ const handleLogout = async (e) => {
         <button onClick={getUser}>get user</button>
 
         <button onClick={handleLogout}>Log out</button>
-      </>
+      </div>
     )
   }
   

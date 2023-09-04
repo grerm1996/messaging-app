@@ -12,11 +12,11 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div className='login-container'>
     {displayRegister ?
       (<Register toggleDisplay={toggleDisplay}/>) :
       (<Login toggleDisplay={toggleDisplay}/>)}
-    </>
+    </div>
   )
 }
 
