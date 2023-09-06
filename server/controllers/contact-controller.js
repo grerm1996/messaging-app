@@ -3,9 +3,10 @@ const randToken = require('rand-token');
 
 const addContact = async (req, res) => {
     try {
+        console.log(req.sessionStore.sessions);
         const newContact = req.body.contact;
         let contactExists = await Users.findOne({ username: req.body.contact })
-        if (!contactExists) res.status(404).json({ message: "No user under that name" });
+        if (!contactExists) return res.status(404).json({ message: "No such user" });
         console.log(req.user);
         if (req.user.contacts.some(contact => contact.username === req.body.contact)) {
             console.log('that contact is already on the list');

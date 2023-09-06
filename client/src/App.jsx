@@ -8,13 +8,13 @@ function App() {
   const [ displayRegister, setDisplayRegister ] = useState(false)
 
   let toggleDisplay = useCallback(() => {
-    setDisplayRegister((prev) => !prev)
-  }, []);
+      setDisplayRegister((prev) => !prev)
+    }, []);
 
   return (
     <div className='login-container'>
     {displayRegister ?
-      (<Register toggleDisplay={toggleDisplay}/>) :
+      (<Register toggleDisplay={() => setDisplayRegister((prev) => !prev)}/>) :
       (<Login toggleDisplay={toggleDisplay}/>)}
     </div>
   )

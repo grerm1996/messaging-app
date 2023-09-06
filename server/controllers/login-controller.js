@@ -66,13 +66,12 @@ const register = async (req, res) => {
   }
 
 const sendUser = (req, res) => {
-    console.log(req.user)
     if (req.user) {
         res.status(200).send(req.user)
     } else res.status(404).send('sorry')
 }
 
-const logout = (req, res)=> {
+const logout = (req, res) => {
     req.logOut(() => {
       console.log('logged out');
       res.sendStatus(200);

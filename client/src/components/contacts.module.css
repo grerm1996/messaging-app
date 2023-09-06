@@ -2,7 +2,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    grid-column: 1/2;
+    padding-top: 20px;
 }
 
 .contact-clickable:hover {
@@ -24,9 +25,29 @@
     color: red
 }
 
+.offline {
+    height: 15px;
+    width: 15px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.online {
+    height: 15px;
+    width: 15px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
+}
+
 .deleteContactBtn {
     color: rgb(247, 100, 100);
     transition: transform .2s ease-in-out; 
     transform: scale(1.0); 
 
+}
+
+.error {
+    color: red
 }

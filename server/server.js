@@ -25,6 +25,8 @@ mongoose.connect(mongoDb, { useUnifiedTopology: true, useNewUrlParser: true })
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
 
+let nowOnline = {};
+
 io.on('connection', (socket) => {
   console.log(`User connected with socket ID: ${socket.id}`);
 
@@ -37,8 +39,13 @@ io.on('connection', (socket) => {
         console.log('Message sent successfully');
       }
     });
-    
   });
+
+  socket.on('add-as-online', (username) => {
+    nowOnline[socket.id] = username;
+    console.log('now online: ', nowOnline);
+    io.emit('receive-online-users', nowOnline)
+  })
 
   socket.on('join-room', (convoId) => {
     console.log(`User ${socket.id} joined conversation ${convoId}`);
@@ -53,6 +60,9 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log(`User ${socket.id} disconnected`)
+    delete nowOnline[socket.id]
+    io.emit('receive-online-users', nowOnline)
+    console.log('online list: ', nowOnline);
   });
 });
 

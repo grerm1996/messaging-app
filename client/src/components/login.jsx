@@ -55,7 +55,7 @@ const handleLogout = async (e) => {
     } else {
       // Unsuccessful logout
       const errorData = await response.json();
-      console.log(errorData.error); // Assuming the JSON contains an "error" field
+      console.log(errorData.error); 
     }
   } catch (error) {
     console.error("Error during login:", error);

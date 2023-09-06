@@ -6,9 +6,12 @@ import PropTypes from 'prop-types';
 function Contacts(props) {
 
     const [newContactName, setNewContactName] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
 
     const handleAddContact = async (e) => {
         e.preventDefault();
+        setErrorMessage('');
         console.log(props.userData._id);
         try {
             const response = await fetch(`http://localhost:4000/contacts/add/${props.userData._id}`, {
@@ -30,18 +33,19 @@ function Contacts(props) {
                 console.log(props.userData);
             } else {
                 setNewContactName('');
-            const errorData = await response.json();
-            return console.log(errorData.message); // Assuming the JSON contains an "error" field
+                const errorData = await response.json();
+                return setErrorMessage(errorData.message); // Assuming the JSON contains an "error" field
             }
         } catch (error) {
             console.error("Error during add contact:", error);
+            setErrorMessage(error)
         }
 
     setNewContactName('');
 };
 
     const deleteContact = async (contactToDelete) => {
-
+        setErrorMessage('');
         console.log(contactToDelete);
         try {
             const response = await fetch(`http://localhost:4000/contacts/remove/${props.userData._id}`, {
@@ -101,8 +105,7 @@ function Contacts(props) {
           } catch (error) {
             console.error('Error fetching data:', error);
           }
-
-        
+    
 
     }
 
@@ -112,6 +115,7 @@ function Contacts(props) {
             <ul className={style['contact-list']}>
                 {props.userData.contacts.map((contact)=> 
                 <li key={contact._id} >
+                    <span className={props.onlineFriends && props.onlineFriends.includes(contact.username) ? style.online : style.offline}></span> { }
                     <span className={style['contact-clickable']} onClick={() => selectConvo(contact.convoId)}>{contact.username}</span>
                     <span className={style.deleteContactBtn} onClick={({})=> deleteContact(contact.username)}> ×</span>
                 </li>)}
@@ -120,7 +124,7 @@ function Contacts(props) {
                 <input id='add-contact' name='add-contact' onChange={(e)=>setNewContactName(e.target.value)} value={newContactName} placeholder="Enter new contact"></input>
                 <button onClick={handleAddContact} className={style.addContactBtn}>Add Contact</button>
             </form>
-
+            {errorMessage ? <p className={style.error}>{errorMessage}</p> : null}
             
         </div>
     )    

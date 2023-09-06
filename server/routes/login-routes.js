@@ -11,11 +11,6 @@ router.post('/register', validateRegister, checkNotAuthenticated, register)
 
 router.delete('/logout', logout)
 
-router.delete('/logout', (req, res) => {
-    req.logOut()
-    res.redirect('/')
-})
-
 router.get('/user', sendUser) 
 
 module.exports = router

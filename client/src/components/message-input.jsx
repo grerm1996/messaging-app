@@ -7,7 +7,8 @@ function MessageInput(props) {
     const [message, setMessage] = useState('')
     let recipient = props.currentConvo.participants.find(user => user !== props.userData.username);
 
-    const sendMessage = async (e) => {
+    const sendMessage = async () => {
+        if (!message) return;
         const messageObj = {
             msgtext: message,
             sender: props.userData.username,
