@@ -6,9 +6,9 @@ const flash = require('express-flash')
 
 // this is reverse of above; kicks user out of login page if theyre logged in. you'll have to update the redirect destination once you've made one.
 function checkNotAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
+/*     if (req.isAuthenticated()) {
         return res.redirect('/home')
-    }
+    } */
     return next()
 }
 
@@ -54,7 +54,8 @@ const register = async (req, res) => {
         const newUser = new Users({
           username: req.body.username,
           password: hashedPassword,
-          contacts: []
+          contacts: [],
+          avatar: 0
         });
         await newUser.save();
         req.logIn(newUser, (err) => {

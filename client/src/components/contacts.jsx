@@ -3,6 +3,7 @@ import style from './contacts.module.css';
 import PropTypes from 'prop-types';
 
 
+
 function Contacts(props) {
 
     const [newContactName, setNewContactName] = useState('');
@@ -79,7 +80,7 @@ function Contacts(props) {
         }
     }
 
-    const selectConvo = async (convoId) => {
+    const selectConvo = async (convoId, username) => {
         if (props.currentConvo) {
             props.exitRoom(props.currentConvo.convoId)
         }
@@ -111,12 +112,14 @@ function Contacts(props) {
 
     return(
         <div className={style.contacts}>
+
             <label>Contacts:</label>
             <ul className={style['contact-list']}>
                 {props.userData.contacts.map((contact)=> 
                 <li key={contact._id} >
-                    <span className={props.onlineFriends && props.onlineFriends.includes(contact.username) ? style.online : style.offline}></span> { }
-                    <span className={style['contact-clickable']} onClick={() => selectConvo(contact.convoId)}>{contact.username}</span>
+                    <span data-tooltip={props.onlineFriends && props.onlineFriends.includes(contact.username) ? "Currently online" : "Currently offline"}
+                    className={props.onlineFriends && props.onlineFriends.includes(contact.username) ? style.online : style.offline}></span> { }
+                    <span className={style['contact-clickable']} onClick={() => selectConvo(contact.convoId, contact.username)}>{contact.username}</span>
                     <span className={style.deleteContactBtn} onClick={({})=> deleteContact(contact.username)}> ×</span>
                 </li>)}
             </ul>
@@ -125,7 +128,7 @@ function Contacts(props) {
                 <button onClick={handleAddContact} className={style.addContactBtn}>Add Contact</button>
             </form>
             {errorMessage ? <p className={style.error}>{errorMessage}</p> : null}
-            
+           
         </div>
     )    
 

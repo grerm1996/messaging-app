@@ -4,6 +4,8 @@ import MessageInput from './message-input';
 import Contacts from './contacts';
 import Convo from './convo';
 import io from 'socket.io-client';
+import Avatar from './avatar';
+
 
 let socket;
 
@@ -117,6 +119,7 @@ function Chat(props) {
         userData ? 
           <div className={style.gridcontainer}>
             <p>You are currently logged in as <strong>{userData.username}</strong>.  <a onClick={handleLogout}>Logout?</a></p>
+            <Avatar userData={userData} setUserData={setUserData}/>
               < Contacts userData={userData} setUserData={setUserData} currentConvo={currentConvo} setCurrentConvo={setCurrentConvo} setConvoMessages={setConvoMessages} exitRoom={exitRoom} joinRoom={joinRoom} onlineFriends={onlineFriends}/>
               {currentConvo ? <>
                 < Convo currentConvo={currentConvo} convoMessages={convoMessages} userData={userData}/>

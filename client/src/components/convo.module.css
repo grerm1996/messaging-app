@@ -2,7 +2,9 @@
     display: flex;
     justify-content: center;
     height: calc(100vh - 200px);
-    padding-top: 10px
+    padding-top: 10px;
+    grid-column: 2/3;
+    grid-row: 2/4;
 }
 
 .convo-div {
@@ -38,4 +40,11 @@
 .received-text {
     display: flex;
     justify-content: left;
+}
+
+.date-marker {
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+    letter-spacing: 0.1rem
 }

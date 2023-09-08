@@ -5,12 +5,12 @@ const passport= require('passport')
 
 
 
-router.post('/', postlogin);;
+router.post('/', postlogin)
 
 router.post('/register', validateRegister, checkNotAuthenticated, register)
 
 router.delete('/logout', logout)
 
-router.get('/user', sendUser) 
+router.get('/user', sendUser)
 
 module.exports = router

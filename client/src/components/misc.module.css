@@ -2,5 +2,4 @@
     display: grid;
     grid-template-columns: 1fr 6fr;
     height: 100%;
-    grid-template-rows: 60px 1fr;
 }

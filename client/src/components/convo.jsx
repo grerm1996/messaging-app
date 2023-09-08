@@ -2,17 +2,30 @@ import style from './convo.module.css'
 
 function Convo(props) {
 
+    function formatDate(date) {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(date).toLocaleDateString(undefined, options);
+      }
 
 
     return (
         <div className={style["convo-div-container"]}>
-            
             <div className={style["convo-div"]}>
-                {props.convoMessages.map((message)=>
-                    <div className={message.sender===props.userData.username ? style['sent-text'] : style["received-text"]}>
-                        <p>{message.msgtext}</p>
-                    </div>)
-                    }
+            {props.convoMessages.map((message, index) => (
+                <div key={index}>
+                    {(index === props.convoMessages.length -1|| formatDate(message.date) !== formatDate(props.convoMessages[index + 1].date)) && (
+                        <div className={style['date-marker']}>
+                            {formatDate(message.date) === formatDate(new Date()) ?
+                            <p>Today</p>
+                            : <p>{formatDate(message.date)}</p>}
+                        </div>
+                    )}
+
+                    <div className={message.sender === props.userData.username ? style['sent-text'] : style["received-text"]}>
+                        <p data-date={message.date} data-index={index}>{message.msgtext}</p>
+                    </div>
+                </div>
+            ))}
             </div>
         </div>
     )

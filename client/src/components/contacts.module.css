@@ -7,14 +7,18 @@
 }
 
 .contact-clickable:hover {
-    background-color: grey;
+    background-color: rgb(201, 197, 197);
 }
 
 .contact-list {
     list-style: none;
-    padding-left: 0;
-    font-size: 1.3rem
+    padding-left: 3rem;
+    font-size: 1.3rem;
+    align-items: left;
+    width: 100%;
+    text-align: left
 }
+
 
 .contact-list li:hover {
     cursor: pointer
@@ -25,20 +29,47 @@
     color: red
 }
 
-.offline {
+.online, .offline {
     height: 15px;
     width: 15px;
-    background-color: #bbb;
     border-radius: 50%;
     display: inline-block;
+    position: relative
+}
+
+.online::before,
+.offline::before {
+    --scale: 0;
+    position: absolute;
+    width: 25px;
+    left: 100%;
+    background: black;
+    transform: translateY(-70%) scale(var(--scale));
+    transform-origin: bottom;
+    font-size: 0.7rem;
+    transition: 80ms transform;
+    padding: 0px 3px;
+    text-align: center;
+    content: attr(data-tooltip);
+    color: white;
+    width: max-content;
+    background: #333;
+    border-radius: 0.3rem;
+    justify-content: center;
+    letter-spacing: 0.1em
+}
+
+.online:hover::before,
+.offline:hover::before {
+    --scale: 1;
+}
+
+.offline {
+    background-color: #bbb;
 }
 
 .online {
-    height: 15px;
-    width: 15px;
     background-color: green;
-    border-radius: 50%;
-    display: inline-block;
 }
 
 .deleteContactBtn {

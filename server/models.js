@@ -16,7 +16,8 @@ const UserSchema = new Schema({
   contacts: [{
     username: { type: String, required: true },
     convoId: { type: String }
-  }]
+  }],
+  avatar: { type: Number }
 });
 
 const ConvoSchema = new Schema({
