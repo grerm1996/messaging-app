@@ -1,5 +1,7 @@
 .textarea {
     font-size: 1.4rem;
+    background: var(--clr-light);
+    color:var(--clr-dark)
 
 }
 

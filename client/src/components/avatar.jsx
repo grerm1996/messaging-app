@@ -39,12 +39,17 @@ function Avatar(props) {
     return (
 
         <div className={style['avatar-container']}>
-            <img
-                src={`../public/avatars/${previewAvatar}.png`}
-                className={style['my-avatar']}
-                onClick={()=>setListVisible(!listVisible)}
-            />
 
+            <div className={style['my-avatar-overlay']} onClick={()=>setListVisible(!listVisible)}>
+                <div className={listVisible ? style['overlay-no-hover'] : style.overlay}>
+                    <span>Change avatar?</span>
+                </div>
+            
+                <img
+                    src={`../public/avatars/${previewAvatar}.png`}
+                    className={style['my-avatar']}
+                />
+            </div>
 
             <div className={listVisible ? style['visible-list'] : style['invisibile-list']}>
                 {avaNumbers.map((num)=>

@@ -112,6 +112,10 @@ function Contacts(props) {
 
     return(
         <div className={style.contacts}>
+            <label className={style.switch}>
+                <input checked={!props.darkMode} type="checkbox" onChange={props.toggleDarkMode}/>
+                <span className={style.slider}></span>
+            </label>
 
             <label>Contacts:</label>
             <ul className={style['contact-list']}>

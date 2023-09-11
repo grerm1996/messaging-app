@@ -10,6 +10,7 @@
 
 .my-avatar {
     height: 100px;
+    position: relative
 }
 .my-avatar:hover {
     cursor: pointer
@@ -31,5 +32,38 @@
 }
 
 .avatar-prev:hover {
+    cursor: pointer;
+}
+
+.my-avatar-overlay {
+    position: relative;
     cursor: pointer
+}
+
+.my-avatar-overlay:hover .overlay {
+    display: block;
+}
+
+.my-avatar-overlay:hover .overlay-no-hover {
+    visibility: hidden;
+}
+
+.overlay, .overlay-no-hover {
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    z-index: 10;
+    display: none;
+    height: 100%;
+    width: 100%;
+    color: white;
+    border-radius: 10px;
+}
+
+.overlay span {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute
 }

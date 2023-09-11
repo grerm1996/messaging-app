@@ -2,18 +2,30 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
   max-height: 100vh;
+  --clr-light: white;
+  --clr-dark: black;
+  --clr-primary: white;
+  --clr-secondary: #ddd;
+  --clr-accent: rgba(0, 0, 255, 0.434);
+  --clr-sent: greenyellow;
+  --clr-received: #aaa;
+  padding: none;
+  
+
 }
+
+:root.dark {
+  max-height: 100vh;
+  --clr-light: #212121;
+  --clr-dark: white;
+  --clr-primary: #bbb;
+  --clr-secondary: #666;
+  --clr-accent: rgba(11, 254, 11, 0.478);
+  --clr-sent: greenyellow;
+  --clr-received:#777;
+}
+
 
 a {
   font-weight: 500;
