@@ -1,148 +1,141 @@
 .contacts {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
 }
 
 .contact-clickable:hover {
-    background-color: rgb(201, 197, 197);
+  background-color: rgb(201, 197, 197);
 }
 
 .contact-list {
-    list-style: none;
-    padding-left: 3rem;
-    font-size: 1.3rem;
-    align-items: left;
-    width: 100%;
-    text-align: left
+  list-style: none;
+  padding-left: 3rem;
+  font-size: 1.3rem;
+  align-items: left;
+  width: 100%;
+  text-align: left;
 }
 
 .addContactBtn {
-    background-color: var(--clr-accent);
+  background-color: var(--clr-accent);
 }
 
-
 .contact-list li:hover {
-    cursor: pointer
+  cursor: pointer;
 }
 
 .deleteContactBtn:hover {
-    cursor: pointer;
-    color: red
+  cursor: pointer;
+  color: red;
 }
 
-.online, .offline {
-    height: 15px;
-    width: 15px;
-    border-radius: 50%;
-    display: inline-block;
-    position: relative
+.online,
+.offline {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
 }
 
 .online::before,
 .offline::before {
-    --scale: 0;
-    position: absolute;
-    width: 25px;
-    left: 100%;
-    background: black;
-    transform: translateY(-70%) scale(var(--scale));
-    transform-origin: bottom;
-    font-size: 0.7rem;
-    transition: 80ms transform;
-    padding: 0px 3px;
-    text-align: center;
-    content: attr(data-tooltip);
-    color: white;
-    width: max-content;
-    background: #333;
-    border-radius: 0.3rem;
-    justify-content: center;
-    letter-spacing: 0.1em
+  --scale: 0;
+  position: absolute;
+  width: 25px;
+  left: 100%;
+  background: black;
+  transform: translateY(-70%) scale(var(--scale));
+  transform-origin: bottom;
+  font-size: 0.7rem;
+  transition: 80ms transform;
+  padding: 0px 3px;
+  text-align: center;
+  content: attr(data-tooltip);
+  color: white;
+  width: max-content;
+  background: #333;
+  border-radius: 0.3rem;
+  justify-content: center;
+  letter-spacing: 0.1em;
 }
 
 .online:hover::before,
 .offline:hover::before {
-    --scale: 1;
+  --scale: 1;
 }
 
 .offline {
-    background-color: #bbb;
+  background-color: #bbb;
 }
 
 .online {
-    background-color: green;
+  background-color: rgb(1, 180, 1);
 }
 
 .deleteContactBtn {
-    color: rgb(247, 100, 100);
-    transition: transform .2s ease-in-out; 
-    transform: scale(1.0); 
-
+  color: rgb(247, 100, 100);
+  transition: transform 0.2s ease-in-out;
+  transform: scale(1);
 }
 
 .error {
-    color: red
+  color: red;
 }
 
-
-
-
-
-
 .switch {
-position: relative;
-display: inline-block;
-width: 60px;
-height: 34px;
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
 }
 
 .switch input {
-opacity: 0;
-width: 0;
-height: 0;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 .slider {
-position: absolute;
-cursor: pointer;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-background-color: black;
-transition: .2s;
-border-radius: 34px;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: black;
+  transition: 0.2s;
+  border-radius: 34px;
 }
 
 .slider:before {
-position: absolute;
-content: "";
-height: 26px;
-width: 26px;
-left: 4px;
-bottom: 4px;
-background-color: #ddd;
-transition: .2s;
-border-radius: 50%;
-content: "\263D";
+  position: absolute;
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #ddd;
+  transition: 0.2s;
+  border-radius: 50%;
+  content: url(../public/moon.svg);
+  color: black;
 }
 
 input:checked + .slider {
-background-color: #2196F3;
+  background-color: #2196f3;
 }
 
 input:checked + .slider:before {
-    content: "\263C"
+  content: url(../public/sun.svg);
 }
 
 input:focus + .slider {
-box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #2196f3;
 }
 
 input:checked + .slider:before {
--ms-transform: translateX(26px);
-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
 }
-  

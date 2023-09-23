@@ -1,56 +1,63 @@
 .convo-div-container {
-    display: flex;
-    justify-content: center;
-    height: calc(100vh - 200px);
-    padding-top: 10px;
-    color: var(--clr-dark)
-
+  display: flex;
+  justify-content: center;
+  height: calc(100vh - 200px);
+  padding-top: 10px;
+  color: var(--clr-dark);
 }
 
 .convo-div {
-    border: 2px solid var(--clr-dark);
-    font-size: 20px;
-    display: flex;
-    flex-direction: column-reverse;
-    height: 100%;
-    width: 800px;
-    overflow-y: scroll;
-    background-color: var(--clr-light)
+  border: 2px solid var(--clr-dark);
+  font-size: 20px;
+  display: flex;
+  flex-direction: column-reverse;
+  height: 100%;
+  width: 800px;
+  overflow-y: scroll;
+  background-color: var(--clr-light);
 }
 
 .convo-div p {
-    padding: 6px 10px;
-    border-radius: 5px;
-    margin: 10px;
-    max-width: 550px;
+  padding: 6px 16px;
+  border-radius: 22px;
+  margin: 10px;
+  max-width: 550px;
+}
+
+.friendava {
+  max-height: 50px;
+  max-width: 50px;
+  margin-left: 5px;
+  align-self: center;
 }
 
 .sent-text {
-    display: flex;
-    justify-content: right;
+  display: flex;
+  justify-content: right;
 }
 .sent-text p {
-    background-color: var(--clr-sent);
-    color: black;
+  background-color: var(--clr-sent);
+  color: black;
 }
 
 .received-text p {
-    background-color: var(--clr-received);
-    
+  background-color: var(--clr-received);
+  grid-column: 2/3;
+  justify-self: left;
 }
 
 .received-text {
-    display: flex;
-    justify-content: left;
+  display: grid;
+  grid-template-columns: 50px auto;
 }
 
 .date-marker {
-    display: flex;
-    justify-content: center;
-    font-size: 14px;
-    letter-spacing: 0.1rem
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  letter-spacing: 0.1rem;
 }
 
 .date-marker p {
-    background: var(--clr-secondary);
+  background: var(--clr-secondary);
 }
