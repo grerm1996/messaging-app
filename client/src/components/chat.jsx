@@ -17,6 +17,7 @@ function Chat() {
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") !== "true"
   );
+  const [menuVisibility, setMenuVisibility] = useState(false);
 
   useEffect(() => {
     async function getUserData() {
@@ -121,11 +122,16 @@ function Chat() {
 
   return userData ? (
     <div className={style.gridcontainer}>
-      <nav className={style.sidebar}>
-        <p>
-          You are currently logged in as <strong>{userData.username}</strong>.{" "}
-          <a onClick={handleLogout}>Logout?</a>
-        </p>
+      <nav className={style.sidebar} id={menuVisibility ? style.menuOut : null}>
+        <img
+          className={style["menu-button"]}
+          src="../menu.svg"
+          onClick={() => setMenuVisibility((menuVisibility) => !menuVisibility)}
+        ></img>
+        <h2 className={style.welcome}>
+          Welcome, <strong>{userData.username}</strong>.{" "}
+        </h2>
+
         <Avatar userData={userData} setUserData={setUserData} />
         <Contacts
           userData={userData}
@@ -140,11 +146,24 @@ function Chat() {
           toggleDarkMode={toggleDarkMode}
           setFriendAvatar={setFriendAvatar}
         />
+        <div className={style["nav-bottom"]}>
+          <button className={style.logout} onClick={handleLogout}>
+            Logout
+          </button>
+          <label className={style.switch}>
+            <input
+              checked={!darkMode}
+              type="checkbox"
+              onChange={toggleDarkMode}
+            />
+            <span className={style.slider}></span>
+          </label>
+        </div>
       </nav>
 
       <div className={style.mainarea}>
         {currentConvo ? (
-          <>
+          <div>
             <Convo
               currentConvo={currentConvo}
               convoMessages={convoMessages}
@@ -156,14 +175,16 @@ function Chat() {
               userData={userData}
               sendMessage={sendMessage}
             />
-          </>
+          </div>
+        ) : userData.contacts.length > 0 ? (
+          <p>Select a contact to start chatting!</p>
         ) : (
-          <div>no convo selected</div>
+          <p>Search for a friend's username on the left to start talking!</p>
         )}
       </div>
     </div>
   ) : (
-    <h1>not allowed</h1>
+    <h1>403: Forbidden</h1>
   );
 }
 

@@ -11,8 +11,6 @@
   --clr-sent: greenyellow;
   --clr-received: #aaa;
   padding: none;
-  
-
 }
 
 :root.dark {
@@ -23,9 +21,8 @@
   --clr-secondary: #666;
   --clr-accent: rgba(11, 254, 11, 0.478);
   --clr-sent: greenyellow;
-  --clr-received:#777;
+  --clr-received: #777;
 }
-
 
 a {
   font-weight: 500;
@@ -60,9 +57,7 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
-  border-color: #646cff;
-}
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -75,8 +70,5 @@ button:focus-visible {
   }
   a:hover {
     color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
   }
 }

@@ -1,69 +1,72 @@
-.avatar-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    grid-column: 1/2;
-    padding: 10px;
-    max-width: 200px;
-    
+.avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-column: 1/2;
+  padding: 10px;
+  max-width: 200px;
 }
 
 .my-avatar {
-    height: 100px;
-    position: relative
+  height: 100px;
+  position: relative;
 }
 .my-avatar:hover {
-    cursor: pointer
+  cursor: pointer;
 }
 
 .visible-list {
-    padding: 7px;
-    position: absolute;
-    top: 10rem
+  padding: 7px;
+  position: absolute;
+  top: 10rem;
+  background: var(--clr-secondary);
+  z-index: 2;
+  border: 2px solid black;
 }
 
 .invisibile-list {
-    display: none;
+  display: none;
 }
 
 .avatar-prev {
-    height: 3rem;
-    margin: 1px 2px;
+  height: 3rem;
+  margin: 1px 2px;
 }
 
 .avatar-prev:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .my-avatar-overlay {
-    position: relative;
-    cursor: pointer
+  position: relative;
+  cursor: pointer;
 }
 
 .my-avatar-overlay:hover .overlay {
-    display: block;
+  display: block;
 }
 
 .my-avatar-overlay:hover .overlay-no-hover {
-    visibility: hidden;
+  visibility: hidden;
 }
 
-.overlay, .overlay-no-hover {
-    background-color: rgba(0, 0, 0, 0.6);
-    position: absolute;
-    z-index: 10;
-    display: none;
-    height: 100%;
-    width: 100%;
-    color: white;
-    border-radius: 10px;
+.overlay,
+.overlay-no-hover {
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  z-index: 10;
+  display: none;
+  height: 100%;
+  width: 100%;
+  color: white;
+  border-radius: 10px;
 }
 
 .overlay span {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
 }

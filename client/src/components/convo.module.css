@@ -22,6 +22,22 @@
   border-radius: 22px;
   margin: 10px;
   max-width: 550px;
+  word-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .convo-div-container {
+    height: 85vh;
+  }
+  .convo-div {
+    width: 95vw;
+    max-width: 100%;
+    border: none;
+  }
+
+  .convo-div p {
+    max-width: 60vw;
+  }
 }
 
 .friendava {
