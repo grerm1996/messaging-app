@@ -1,6 +1,7 @@
 .gridcontainer {
   height: 100%;
   display: flex;
+  justify-content: center;
 }
 
 .sidebar {
@@ -37,17 +38,17 @@
 
 @media (max-width: 768px) {
   .sidebar {
-    left: -60%;
+    left: -65vw;
     position: absolute;
-    width: 50vw;
+    width: 65vw;
+    padding: 0;
   }
 
   .menu-button {
     display: block;
     top: 0;
-    left: 10px;
     position: absolute;
-    left: 115%;
+    left: 105%;
   }
   .menu-button:hover {
     cursor: pointer;

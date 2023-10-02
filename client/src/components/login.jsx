@@ -1,82 +1,30 @@
-import style from './login.module.css'
-import { useState } from 'react'
+import style from "./login.module.css";
+import { useState } from "react";
 
 function Login(props) {
-
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setErrorMessage('');
+    e.preventDefault();
+    setErrorMessage("");
 
-  try {
-    const response = await fetch("http://localhost:4000/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({ username, password }),
-    });
-
-    if (response.ok) {
-      const responseData = await response.json(); // Parse the response JSON
-      console.log(responseData); // Log the parsed response data
-      console.log('logged in!');
-      /* window.location.href = "http://localhost:5173"; */
-
-    } else {
-      // Unsuccessful login
-      const errorData = await response.json();
-      console.log(errorData.error); // Assuming the JSON contains an "error" field
-      setErrorMessage(errorData.error);
-    }
-  } catch (error) {
-    console.error("Error during login:", error);
-  }
-};
-
-const handleLogout = async (e) => {
-  e.preventDefault();
-  setErrorMessage('');
-
-  try {
-    const response = await fetch("http://localhost:4000/login/logout", {
-      method: "DELETE",
-      credentials: "include",
-      body: JSON.stringify({ username, password }),
-    });
-
-    if (response.ok) {
-      console.log('logged out');
-      
-    } else {
-      // Unsuccessful logout
-      const errorData = await response.json();
-      console.log(errorData.error); 
-    }
-  } catch (error) {
-    console.error("Error during login:", error);
-  }
-};
-
-
-  const getUser = async () => {
     try {
-      const response = await fetch("http://localhost:4000/login/user", {
-        method: "GET",
+      const response = await fetch("http://localhost:4000/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-      },
+          "Content-Type": "application/json",
+        },
         credentials: "include",
+        body: JSON.stringify({ username, password }),
       });
 
       if (response.ok) {
         const responseData = await response.json(); // Parse the response JSON
         console.log(responseData); // Log the parsed response data
+        console.log("logged in!");
+        props.checkAuthenticity();
       } else {
         // Unsuccessful login
         const errorData = await response.json();
@@ -84,32 +32,68 @@ const handleLogout = async (e) => {
         setErrorMessage(errorData.error);
       }
     } catch (error) {
-      console.error("Error fetching user data:", error);
+      console.error("Error during login:", error);
     }
   };
 
-    return (
-      <div>
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    setErrorMessage("");
 
-        <h2>Please sign in</h2>
-        <p>Don't have an account? <a onClick={props.toggleDisplay}>Register here.</a></p>
+    try {
+      const response = await fetch("http://localhost:4000/login/logout", {
+        method: "DELETE",
+        credentials: "include",
+        body: JSON.stringify({ username, password }),
+      });
 
-        <form className={style.loginform} autoComplete='off' onSubmit={handleSubmit}>
-          <label htmlFor="username">Username:</label>
-          <input type="text" name='username'onChange={(e) => setUsername(e.target.value)}/>
-  
-          <label htmlFor="password">Password:</label>
-          <input type="password" name='password' onChange={(e) => setPassword(e.target.value)}/>
+      if (response.ok) {
+        console.log("logged out");
+      } else {
+        // Unsuccessful logout
+        const errorData = await response.json();
+        console.log(errorData.error);
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
+  };
 
-          <button type='submit'>Log in</button>
-        </form>
-        {errorMessage ? <p className={style.error}>{errorMessage}</p> : null}
-        <button onClick={getUser}>get user</button>
+  return (
+    <div>
+      <h2>Please sign in</h2>
+      <p>
+        Don't have an account?{" "}
+        <a onClick={props.toggleDisplay}>Register here.</a>
+      </p>
 
-        <button onClick={handleLogout}>Log out</button>
-      </div>
-    )
-  }
-  
-  export default Login
-  
+      <form
+        className={style.loginform}
+        autoComplete="off"
+        onSubmit={handleSubmit}
+      >
+        <label htmlFor="username">Username:</label>
+        <input
+          type="text"
+          name="username"
+          onChange={(e) => setUsername(e.target.value)}
+        />
+
+        <label htmlFor="password">Password:</label>
+        <input
+          type="password"
+          name="password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button type="submit">Log in</button>
+      </form>
+      {errorMessage ? <p className={style.error}>{errorMessage}</p> : null}
+      {/* <button onClick={getUser}>get user</button> */}
+
+      <button onClick={handleLogout}>Log out</button>
+    </div>
+  );
+}
+
+export default Login;

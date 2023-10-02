@@ -162,7 +162,7 @@ function Contacts(props) {
       </ul>
       <form className={style.contacts} autoComplete="off">
         <input
-          id="add-contact"
+          id={style["add-contact"]}
           name="add-contact"
           onChange={(e) => setNewContactName(e.target.value)}
           value={newContactName}

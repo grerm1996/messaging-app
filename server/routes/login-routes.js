@@ -1,16 +1,22 @@
-const express = require('express')
-const router = express.Router()
-const { postlogin, validateRegister, authenticateLogin, checkNotAuthenticated, register, sendUser, logout } = require('../controllers/login-controller.js')
-const passport= require('passport')
+const express = require("express");
+const router = express.Router();
+const {
+  postlogin,
+  validateRegister,
+  authenticateLogin,
+  checkNotAuthenticated,
+  register,
+  sendUser,
+  logout,
+} = require("../controllers/login-controller.js");
+const passport = require("passport");
 
+router.post("/", checkNotAuthenticated, postlogin);
 
+router.post("/register", validateRegister, checkNotAuthenticated, register);
 
-router.post('/', postlogin)
+router.delete("/logout", logout);
 
-router.post('/register', validateRegister, checkNotAuthenticated, register)
+router.get("/user", sendUser);
 
-router.delete('/logout', logout)
-
-router.get('/user', sendUser)
-
-module.exports = router
+module.exports = router;

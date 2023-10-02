@@ -10,6 +10,7 @@
   --clr-accent: rgba(0, 0, 255, 0.434);
   --clr-sent: greenyellow;
   --clr-received: #aaa;
+  --clr-error: red;
   padding: none;
 }
 
@@ -22,6 +23,7 @@
   --clr-accent: rgba(11, 254, 11, 0.478);
   --clr-sent: greenyellow;
   --clr-received: #777;
+  --clr-error: yellow;
 }
 
 a {

@@ -1,19 +1,24 @@
 .loginform {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
 }
 label {
-    letter-spacing: 2px;
+  letter-spacing: 2px;
 }
 
 a:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .error {
-    color: red
+  color: red;
 }
 
+@media (max-width: 768px) {
+  .loginform input {
+    height: 2rem;
+  }
+}
