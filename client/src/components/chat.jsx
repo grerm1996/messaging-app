@@ -159,7 +159,7 @@ function Chat(props) {
           >
             <img
               className={style["menu-button"]}
-              src="../menu.svg"
+              src="./menu.svg"
               onClick={() =>
                 setMenuVisibility((menuVisibility) => !menuVisibility)
               }

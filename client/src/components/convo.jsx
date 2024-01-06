@@ -36,7 +36,7 @@ function Convo(props) {
                 formatDate(message.date) !==
                   formatDate(props.convoMessages[index + 1]?.date)) ? (
                 <img
-                  src={`../avatars/${props.friendAvatar}.png`}
+                  src={`./avatars/${props.friendAvatar}.png`}
                   className={style.friendava}
                 />
               ) : null}

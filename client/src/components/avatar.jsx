@@ -82,7 +82,7 @@ function Avatar(props) {
       >
         {avaNumbers.map((num) => (
           <img
-            src={`../avatars/${num}.png`}
+            src={`./avatars/${num}.png`}
             className={style["avatar-prev"]}
             onClick={() => selectAvatar(num)}
             onMouseOver={() => setPreviewAvatar(num)}
