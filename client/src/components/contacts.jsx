@@ -12,7 +12,7 @@ function Contacts(props) {
     console.log(props.userData._id);
     try {
       const response = await fetch(
-        `http://localhost:4000/contacts/add/${props.userData._id}`,
+        `https://messaging-app-thrumming-wildflower-8588.fly.dev/contacts/add/${props.userData._id}`,
         {
           method: "PUT",
           headers: {
@@ -55,7 +55,7 @@ function Contacts(props) {
     console.log(contactToDelete);
     try {
       const response = await fetch(
-        `http://localhost:4000/contacts/remove/${props.userData._id}`,
+        `https://messaging-app-thrumming-wildflower-8588.fly.dev/contacts/remove/${props.userData._id}`,
         {
           method: "PUT",
           headers: {
@@ -100,7 +100,7 @@ function Contacts(props) {
     console.log(convoId);
     try {
       const response = await fetch(
-        `http://localhost:4000/messages/${convoId}`,
+        `https://messaging-app-thrumming-wildflower-8588.fly.dev/messages/${convoId}`,
         {
           method: "GET",
           headers: {

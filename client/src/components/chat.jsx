@@ -22,13 +22,16 @@ function Chat(props) {
   useEffect(() => {
     async function getUserData() {
       try {
-        const response = await fetch("http://localhost:4000/login/user", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        });
+        const response = await fetch(
+          "https://messaging-app-thrumming-wildflower-8588.fly.dev/login/user",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Request failed");
@@ -41,7 +44,7 @@ function Chat(props) {
         console.error("Error fetching data:", error);
       }
     }
-    socket = io("http://localhost:3000");
+    socket = io("https://messaging-app-thrumming-wildflower-8588.fly.dev:3000");
 
     socket.on("chat-message-out", (msg) => {
       console.log("incoming message thru socket: ", msg);
@@ -96,10 +99,13 @@ function Chat(props) {
 
   const handleLogout = async (e) => {
     try {
-      const response = await fetch("http://localhost:4000/login/logout", {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const response = await fetch(
+        "https://messaging-app-thrumming-wildflower-8588.fly.dev/login/logout",
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
 
       if (response.ok) {
         console.log("logged out");

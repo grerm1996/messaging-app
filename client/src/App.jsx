@@ -8,8 +8,10 @@ function App() {
   const [displayRegister, setDisplayRegister] = useState(false);
   const [authentication, setAuthentication] = useState(null);
 
+  const serverURL = "https://messaging-app-thrumming-wildflower-8588.fly.dev";
+
   const checkAuthenticity = () => {
-    fetch("http://localhost:4000/authenticate", {
+    fetch(`${serverURL}/authenticate`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +43,10 @@ function App() {
   ) : (
     <div className="login-container">
       {displayRegister ? (
-        <Register toggleDisplay={() => setDisplayRegister((prev) => !prev)} />
+        <Register
+          toggleDisplay={() => setDisplayRegister((prev) => !prev)}
+          checkAuthenticity={checkAuthenticity}
+        />
       ) : (
         <Login
           toggleDisplay={toggleDisplay}

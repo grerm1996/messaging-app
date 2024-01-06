@@ -1,39 +1,42 @@
-import style from './header.module.css'
+import style from "./header.module.css";
 
 function Header(props) {
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    setErrorMessage("");
 
-    const handleLogout = async (e) => {
-        e.preventDefault();
-        setErrorMessage('');
-      
-        try {
-          const response = await fetch("http://localhost:4000/login/logout", {
-            method: "DELETE",
-            credentials: "include",
-            body: JSON.stringify({ username, password }),
-          });
-      
-          if (response.ok) {
-            console.log('logged out');
-            
-          } else {
-            // Unsuccessful logout
-            const errorData = await response.json();
-            console.log(errorData.error); // Assuming the JSON contains an "error" field
-          }
-        } catch (error) {
-          console.error("Error during login:", error);
+    try {
+      const response = await fetch(
+        "https://messaging-app-thrumming-wildflower-8588.fly.dev/login/logout",
+        {
+          method: "DELETE",
+          credentials: "include",
+          body: JSON.stringify({ username, password }),
         }
-      };
+      );
 
+      if (response.ok) {
+        console.log("logged out");
+      } else {
+        // Unsuccessful logout
+        const errorData = await response.json();
+        console.log(errorData.error); // Assuming the JSON contains an "error" field
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
+  };
 
-    return (
-        <div className={style.header}>
-            {/* <h1 className={style.headertitle}>r. v. chatman</h1> */}
-            <p>You are currently logged in as <strong>{props.userData.username}</strong>.  <a onClick={handleLogout}>Logout?</a></p>
-        </div>
-    )
+  return (
+    <div className={style.header}>
+      {/* <h1 className={style.headertitle}>r. v. chatman</h1> */}
+      <p>
+        You are currently logged in as{" "}
+        <strong>{props.userData.username}</strong>.{" "}
+        <a onClick={handleLogout}>Logout?</a>
+      </p>
+    </div>
+  );
 }
 
-
-export default Header
+export default Header;

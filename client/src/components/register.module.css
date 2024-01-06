@@ -1,10 +1,27 @@
 .registerform {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
 }
 
 label {
-    letter-spacing: 2px;
+  letter-spacing: 2px;
+}
+
+.error {
+  color: red;
+  height: 2rem;
+}
+
+.registerform > input:focus:invalid {
+  outline: red solid 1px;
+}
+
+.registerform > input:valid {
+  outline: blue solid 1px;
+}
+
+.length {
+  font-size: 0.8rem;
 }

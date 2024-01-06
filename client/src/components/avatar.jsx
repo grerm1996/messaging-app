@@ -29,7 +29,7 @@ function Avatar(props) {
   const selectAvatar = async (num) => {
     try {
       const response = await fetch(
-        `http://localhost:4000/contacts/add/${props.userData._id}`,
+        `https://messaging-app-thrumming-wildflower-8588.fly.dev/contacts/add/${props.userData._id}`,
         {
           method: "PUT",
           headers: {

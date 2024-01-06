@@ -6,19 +6,22 @@ function Login(props) {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setErrorMessage("");
 
     try {
-      const response = await fetch("http://localhost:4000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ username, password }),
-      });
+      const response = await fetch(
+        "https://messaging-app-thrumming-wildflower-8588.fly.dev/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ username, password }),
+        }
+      );
 
       if (response.ok) {
         const responseData = await response.json(); // Parse the response JSON
@@ -36,29 +39,6 @@ function Login(props) {
     }
   };
 
-  const handleLogout = async (e) => {
-    e.preventDefault();
-    setErrorMessage("");
-
-    try {
-      const response = await fetch("http://localhost:4000/login/logout", {
-        method: "DELETE",
-        credentials: "include",
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (response.ok) {
-        console.log("logged out");
-      } else {
-        // Unsuccessful logout
-        const errorData = await response.json();
-        console.log(errorData.error);
-      }
-    } catch (error) {
-      console.error("Error during login:", error);
-    }
-  };
-
   return (
     <div>
       <h2>Please sign in</h2>
@@ -70,7 +50,7 @@ function Login(props) {
       <form
         className={style.loginform}
         autoComplete="off"
-        onSubmit={handleSubmit}
+        onSubmit={handleLogin}
       >
         <label htmlFor="username">Username:</label>
         <input
@@ -89,9 +69,6 @@ function Login(props) {
         <button type="submit">Log in</button>
       </form>
       {errorMessage ? <p className={style.error}>{errorMessage}</p> : null}
-      {/* <button onClick={getUser}>get user</button> */}
-
-      <button onClick={handleLogout}>Log out</button>
     </div>
   );
 }

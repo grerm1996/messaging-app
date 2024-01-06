@@ -1,27 +1,107 @@
-import style from './register.module.css'
+import style from "./register.module.css";
+import { useState } from "react";
 
 function Register(props) {
+  const [errorMessage, setErrorMessage] = useState(" ");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-    return (
-      <div className={style.register}>
-        <h2>Please create your account</h2>
-        <p>Already registered? <a onClick={props.toggleDisplay}>Log in here.</a></p>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMessage("");
+    if (password != confirmPassword) {
+      setErrorMessage(
+        "Entered passwords do not match. Please try entering them again."
+      );
+    } else {
+      try {
+        const response = await fetch(
+          "https://messaging-app-thrumming-wildflower-8588.fly.dev/login/register",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({ username, password }),
+          }
+        );
 
-        <form className={style.registerform} action="http://localhost:4000/login/register" method='POST' autoComplete='off' target="_self" onClick='this.diabled=true;this.value=`Sending...`'>
-          <label htmlFor="username">Username:</label>
-          <input type="text" name='username' id='username' required/>
-  
-          <label htmlFor="password">Password:</label>
-          <input type="password" name='password' id='password' required/>
-          <label htmlFor="confirm-password">Confirm Password:</label>
-          <input type="password" name='confirm-password' id='confirm-password' required/>
+        if (response.ok) {
+          props.checkAuthenticity();
+        } else {
+          // Unsuccessful registration
+          const errorData = await response.json();
+          console.log(errorData.error); // Assuming the JSON contains an "error" field
+          setErrorMessage(errorData.error);
+        }
+      } catch (error) {
+        console.error("Error during login:", error);
+      }
+    }
+  };
 
-          <button>Sign me up!</button>
-        </form>
-  
-      </div>
-    )
-  }
-  
-  export default Register
-  
+  const handleChange = (e) => {
+    if (!/^[a-zA-Z0-9]+$/.test(e.target.value) && e.target.value != "") {
+      setErrorMessage(
+        "Usernames and passwords may not include non-alphanumeric characters"
+      );
+    } else {
+      setErrorMessage(" ");
+    }
+  };
+
+  return (
+    <div className={style.register}>
+      <h2>Create your account</h2>
+      <p>
+        Already registered? <a onClick={props.toggleDisplay}>Log in here.</a>
+      </p>
+
+      <form
+        className={style.registerform}
+        autoComplete="off"
+        target="_self"
+        onSubmit={handleSubmit}
+        onChange={(e) => handleChange(e)}
+      >
+        <label htmlFor="username">Username:</label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          minLength="4"
+          maxLength="12"
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+
+        <label htmlFor="password">Password:</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          minLength="4"
+          maxLength="12"
+          pattern="[a-zA-Z0-9]+"
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <label htmlFor="confirm-password">Confirm Password:</label>
+        <input
+          type="password"
+          name="confirm-password"
+          id="confirm-password"
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+        />
+
+        <button type="submit">Sign me up!</button>
+      </form>
+      {errorMessage ? <p className={style.error}>{errorMessage}</p> : null}
+    </div>
+  );
+}
+
+export default Register;
