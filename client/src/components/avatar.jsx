@@ -70,7 +70,7 @@ function Avatar(props) {
         </div>
 
         <img
-          src={`../avatars/${previewAvatar}.png`}
+          src={`./avatars/${previewAvatar}.png`}
           className={style["my-avatar"]}
         />
       </div>

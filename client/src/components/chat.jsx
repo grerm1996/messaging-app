@@ -44,7 +44,7 @@ function Chat(props) {
         console.error("Error fetching data:", error);
       }
     }
-    socket = io("https://messaging-app-thrumming-wildflower-8588.fly.dev:3000");
+    socket = io("https://messaging-app-thrumming-wildflower-8588.fly.dev");
 
     socket.on("chat-message-out", (msg) => {
       console.log("incoming message thru socket: ", msg);
