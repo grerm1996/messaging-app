@@ -1,5 +1,6 @@
 import style from "./login.module.css";
 import { useState } from "react";
+import config from "../config";
 
 function Login(props) {
   const [username, setUsername] = useState("");
@@ -11,17 +12,15 @@ function Login(props) {
     setErrorMessage("");
 
     try {
-      const response = await fetch(
-        "https://messaging-app-thrumming-wildflower-8588.fly.dev/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({ username, password }),
-        }
-      );
+      const response = await fetch(`${config.backendUrl}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+        credentials: "include",
+        body: JSON.stringify({ username, password }),
+      });
 
       if (response.ok) {
         const responseData = await response.json(); // Parse the response JSON

@@ -1,11 +1,13 @@
-const express = require('express')
-const router = express.Router()
-const { getMessages, postMessage } = require('../controllers/message-controller.js')
-const passport= require('passport')
+const express = require("express");
+const router = express.Router();
+const {
+  checkAuthenticated,
+  getMessages,
+  postMessage,
+} = require("../controllers/message-controller.js");
+const passport = require("passport");
 
+router.get("/:convoId", checkAuthenticated, getMessages);
+router.post("/:convoId", checkAuthenticated, postMessage);
 
-
-router.get('/:convoId', getMessages);
-router.post('/:convoId', postMessage);
-
-module.exports = router
+module.exports = router;

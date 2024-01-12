@@ -1,4 +1,5 @@
 import style from "./header.module.css";
+import config from "../config";
 
 function Header(props) {
   const handleLogout = async (e) => {
@@ -6,14 +7,11 @@ function Header(props) {
     setErrorMessage("");
 
     try {
-      const response = await fetch(
-        "https://messaging-app-thrumming-wildflower-8588.fly.dev/login/logout",
-        {
-          method: "DELETE",
-          credentials: "include",
-          body: JSON.stringify({ username, password }),
-        }
-      );
+      const response = await fetch(`${config.backendUrl}/login/logout`, {
+        method: "DELETE",
+        credentials: "include",
+        body: JSON.stringify({ username, password }),
+      });
 
       if (response.ok) {
         console.log("logged out");

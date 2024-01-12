@@ -1,5 +1,6 @@
 import style from "./avatar.module.css";
 import { useState, useEffect, useRef } from "react";
+import config from "../config.js";
 
 function Avatar(props) {
   const [listVisible, setListVisible] = useState(false);
@@ -29,7 +30,7 @@ function Avatar(props) {
   const selectAvatar = async (num) => {
     try {
       const response = await fetch(
-        `https://messaging-app-thrumming-wildflower-8588.fly.dev/contacts/add/${props.userData._id}`,
+        `${config.backendUrl}/contacts/add/${props.userData._id}`,
         {
           method: "PUT",
           headers: {

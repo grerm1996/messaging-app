@@ -1,5 +1,6 @@
 import style from "./message-input.module.css";
 import { useState, useEffect } from "react";
+import config from "../config.js";
 
 function MessageInput(props) {
   const [message, setMessage] = useState("");
@@ -18,7 +19,7 @@ function MessageInput(props) {
     };
     try {
       const response = await fetch(
-        `https://messaging-app-thrumming-wildflower-8588.fly.dev/messages/${props.currentConvo.convoId}}`,
+        `${config.backendUrl}/messages/${props.currentConvo.convoId}}`,
         {
           method: "POST",
           headers: {

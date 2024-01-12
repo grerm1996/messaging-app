@@ -2,9 +2,6 @@ const { body, validationResult } = require("express-validator");
 const { Users } = require("../models");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
-const flash = require("express-flash");
-
-// this is reverse of above; kicks user out of login page if theyre logged in. you'll have to update the redirect destination once you've made one.
 
 const authenticateLogin = () => {
   return passport.authenticate("local", {
@@ -15,6 +12,7 @@ const authenticateLogin = () => {
 };
 
 const postlogin = (req, res, next) => {
+  console.log(req.protocol);
   passport.authenticate("local", (err, user, info) => {
     if (err) {
       return res.status(500).json({ error: "Internal server error" });
@@ -23,6 +21,7 @@ const postlogin = (req, res, next) => {
       return res.status(401).json({ error: "Authentication failed" });
     }
     req.logIn(user, (err) => {
+      console.log("at auth, doing req.logIn: ", req.session, req.secure);
       if (err) {
         return res.status(500).json({ error: "Internal server error" });
       }
@@ -32,11 +31,16 @@ const postlogin = (req, res, next) => {
 };
 
 const validateRegister = [
-  body("username").trim().isLength({ min: 1 }).escape(),
-  body("password").trim().isLength({ min: 1 }).escape(),
+  body("username").trim().isLength({ min: 4 }).isAlphanumeric().escape(),
+  body("password").trim().isLength({ min: 4 }).isAlphanumeric().escape(),
 ];
 
 const register = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    return res.status(400).json({ errors });
+  }
   let usingName = await Users.findOne({ username: req.body.username });
 
   if (usingName) res.send("User already exists");
@@ -52,8 +56,8 @@ const register = async (req, res) => {
     await newUser.save();
     req.logIn(newUser, (err) => {
       if (err) throw err;
-      res.send("Successfully authenticated");
       console.log("user: ", req.user);
+      return res.status(200).send("User registered and logged in successfully");
     });
   }
 };
@@ -65,7 +69,7 @@ const sendUser = (req, res) => {
 };
 
 const logout = (req, res) => {
-  req.logOut(() => {
+  req.logout(() => {
     console.log("logged out");
     res.sendStatus(200);
   });
@@ -87,51 +91,3 @@ module.exports = {
   sendUser,
   logout,
 };
-
-/* 
-app.post("/login", (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-    if (err) {
-      return res.status(500).json({ error: "Internal server error" });
-    }
-    if (!user) {
-      return res.status(401).json({ error: "Authentication failed" });
-    }
-    req.logIn(user, (err) => {
-      if (err) {
-        return res.status(500).json({ error: "Internal server error" });
-      }
-      return res.status(200).json({ message: "Login successful" });
-    });
-  })(req, res, next);
-});
-
-app.post("/register", async (req, res) => {
-  await Users.findOne({ username: req.body.username }, async (err, doc) => {
-    if (err) throw err;
-    if (doc) res.send("User Already Exists");
-    if (!doc) {
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
-      const newUser = new Users({
-        username: req.body.username,
-        password: hashedPassword,
-      });
-      await newUser.save();
-      req.logIn(user, (err) => {
-        if (err) throw err;
-        res.send("Successfully Authenticated");
-        console.log('user:', req.user);
-      })
-    }
-  });
-});
-
-
-app.delete('/logout', (req, res)=> {
-  req.logOut(() => {
-    console.log('logged out');
-    // You can perform additional actions here after logout if needed
-    res.sendStatus(200); // Send a response to indicate success
-  });
-}); */

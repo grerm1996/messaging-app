@@ -2,26 +2,33 @@ const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
 const passport = require("passport");
-const cookieParser = require("cookie-parser");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
+const cookieSession = require("cookie-session");
 const methodOverride = require("method-override");
 const app = express();
 const router = express.Router();
 const { Users } = require("./models");
-require("dotenv").config();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http, {
   cors: {
-    origin: ["http://localhost:5173", "https://admin.socket.io"],
+    origin: [
+      "https://admin.socket.io/",
+      "https://grerm1996.github.io",
+      "http://localhost:5173",
+    ],
     credentials: true,
   },
 });
+const initializePassport = require("./passport-config");
 const { instrument } = require("@socket.io/admin-ui");
 
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
 const mongoDb = process.env.MONGO_URL;
-mongoose.connect(mongoDb, { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose
+  .connect(mongoDb, { useUnifiedTopology: true, useNewUrlParser: true })
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.error("MongoDB Connection Error:", err));
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"));
 
@@ -70,15 +77,22 @@ io.on("connection", (socket) => {
 instrument(io, {
   auth: false,
 });
-// Middleware
 
-const initializePassport = require("./passport-config");
+// Middleware
 initializePassport(passport);
 
 app.use(express.json());
+app.use(
+  cors({
+    credentials: true,
+    origin: "https://grerm1996.github.io",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
+  })
+);
+
 app.use((req, res, next) => {
-  // Allow requests from the specific origin (your client running on port 5173)
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+  res.header("Access-Control-Allow-Origin", "https://grerm1996.github.io");
 
   // Allow credentials to be sent with the request
   res.header("Access-Control-Allow-Credentials", "true");
@@ -93,18 +107,48 @@ app.use((req, res, next) => {
   );
   next();
 });
-app.use(cors({ credentials: true, origin: ["http://localhost:5173"] }));
 app.use(express.urlencoded({ extended: false }));
-
-app.use(
+app.set("trust proxy", 1);
+/* app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    // cookie: { sameSite: "none", secure: true },
+  })
+); */
+app.use(
+  cookieSession({
+    name: "session",
+    keys: ["key1", "key2"],
+    maxAge: 24 * 60 * 60 * 1000,
+    sameSite: "none",
+    secure: true,
   })
 );
+app.use((req, res, next) => {
+  console.log("after creating session: ", req.session, req.secure);
+  next();
+});
 app.use(passport.initialize());
 app.use(passport.session());
+//lets passport work with cookie-session
+app.use((req, res, next) => {
+  if (req.session) {
+    req.session.regenerate = (cb) => cb();
+    req.session.save = (cb) => cb();
+  }
+  next();
+});
+app.use((req, res, next) => {
+  req.secure = true;
+  next();
+});
+app.use((req, res, next) => {
+  console.log("after the hacky bit: ", req.session, req.originalUrl);
+  next();
+});
+
 app.use(methodOverride("_method"));
 
 //----------------------------------------- END OF MIDDLEWARE---------------------------------------------------

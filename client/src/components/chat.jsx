@@ -5,6 +5,7 @@ import Contacts from "./contacts";
 import Convo from "./convo";
 import io from "socket.io-client";
 import Avatar from "./avatar";
+import config from "../config.js";
 
 let socket;
 
@@ -22,16 +23,13 @@ function Chat(props) {
   useEffect(() => {
     async function getUserData() {
       try {
-        const response = await fetch(
-          "https://messaging-app-thrumming-wildflower-8588.fly.dev/login/user",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-          }
-        );
+        const response = await fetch(`${config.backendUrl}/login/user`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
 
         if (!response.ok) {
           throw new Error("Request failed");
@@ -44,7 +42,7 @@ function Chat(props) {
         console.error("Error fetching data:", error);
       }
     }
-    socket = io("https://messaging-app-thrumming-wildflower-8588.fly.dev");
+    socket = io("http://localhost:3000");
 
     socket.on("chat-message-out", (msg) => {
       console.log("incoming message thru socket: ", msg);
@@ -99,13 +97,10 @@ function Chat(props) {
 
   const handleLogout = async (e) => {
     try {
-      const response = await fetch(
-        "https://messaging-app-thrumming-wildflower-8588.fly.dev/login/logout",
-        {
-          method: "DELETE",
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${config.backendUrl}/login/logout`, {
+        method: "DELETE",
+        credentials: "include",
+      });
 
       if (response.ok) {
         console.log("logged out");

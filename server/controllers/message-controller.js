@@ -1,5 +1,12 @@
 const { Messages, Convos, Users } = require("../models");
 
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  return res.redirect("/");
+}
+
 const getMessages = async (req, res) => {
   try {
     const messages = await Messages.find({ convoId: req.params.convoId }).sort({
@@ -39,4 +46,4 @@ const postMessage = async (req, res) => {
   }
 };
 
-module.exports = { getMessages, postMessage };
+module.exports = { checkAuthenticated, getMessages, postMessage };

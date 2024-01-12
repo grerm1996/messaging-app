@@ -1,6 +1,7 @@
 import { useState } from "react";
 import style from "./contacts.module.css";
 import PropTypes from "prop-types";
+import config from "../config";
 
 function Contacts(props) {
   const [newContactName, setNewContactName] = useState("");
@@ -12,7 +13,7 @@ function Contacts(props) {
     console.log(props.userData._id);
     try {
       const response = await fetch(
-        `https://messaging-app-thrumming-wildflower-8588.fly.dev/contacts/add/${props.userData._id}`,
+        `${config.backendUrl}/contacts/add/${props.userData._id}`,
         {
           method: "PUT",
           headers: {
@@ -55,7 +56,7 @@ function Contacts(props) {
     console.log(contactToDelete);
     try {
       const response = await fetch(
-        `https://messaging-app-thrumming-wildflower-8588.fly.dev/contacts/remove/${props.userData._id}`,
+        `${config.backendUrl}/contacts/remove/${props.userData._id}`,
         {
           method: "PUT",
           headers: {
@@ -99,16 +100,13 @@ function Contacts(props) {
     props.joinRoom(convoId);
     console.log(convoId);
     try {
-      const response = await fetch(
-        `https://messaging-app-thrumming-wildflower-8588.fly.dev/messages/${convoId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${config.backendUrl}/messages/${convoId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
       if (!response.ok) {
         throw new Error("Request failed");
       }

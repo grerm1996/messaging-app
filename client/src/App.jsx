@@ -3,15 +3,14 @@ import "./App.css";
 import Register from "./components/register";
 import Login from "./components/login";
 import Chat from "./components/chat";
+import config from "./config";
 
 function App() {
   const [displayRegister, setDisplayRegister] = useState(false);
   const [authentication, setAuthentication] = useState(null);
 
-  const serverURL = "https://messaging-app-thrumming-wildflower-8588.fly.dev";
-
   const checkAuthenticity = () => {
-    fetch(`${serverURL}/authenticate`, {
+    fetch(`${config.backendUrl}/authenticate`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
