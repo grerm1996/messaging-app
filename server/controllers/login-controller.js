@@ -69,10 +69,18 @@ const sendUser = (req, res) => {
 };
 
 const logout = (req, res) => {
-  req.logout(() => {
-    console.log("logged out");
-    res.sendStatus(200);
-  });
+  if (!req.isAuthenticated()) {
+    return console.log("you're already logged out");
+  } else {
+    try {
+      req.logout();
+      console.log("logged out");
+      res.sendStatus(200);
+    } catch (err) {
+      console.error("Error during logout:", err);
+      res.status(500).send("Internal Server Error");
+    }
+  }
 };
 
 function checkNotAuthenticated(req, res, next) {
