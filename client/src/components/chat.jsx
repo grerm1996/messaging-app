@@ -42,30 +42,6 @@ function Chat(props) {
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-      // GET ALL MESSAGES BY OR FOR USER
-      try {
-        await console.log(userData.username);
-        const response = await fetch(
-          `${config.backendUrl}/messages/${userData.username}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Request failed");
-        }
-
-        const data = await response.json();
-        console.log(data);
-        await setUserMessages(data);
-      } catch (error) {
-        console.error("Error fetching user messages:", error);
-      }
     }
     socket = io("http://localhost:3000");
 
@@ -96,9 +72,36 @@ function Chat(props) {
   }, []);
 
   useEffect(() => {
-    if (userData) {
-      socket.emit("add-as-online", userData.username);
+    async function getUserMessages() {
+      if (userData) {
+        socket.emit("add-as-online", userData.username);
+      }
+      // GET ALL MESSAGES BY OR FOR USER
+      try {
+        await console.log(userData.username);
+        const response = await fetch(
+          `${config.backendUrl}/messages/${userData.username}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Request failed");
+        }
+
+        const data = await response.json();
+        console.log(data);
+        await setUserMessages(data);
+      } catch (error) {
+        console.error("Error fetching user messages:", error);
+      }
     }
+    getUserMessages();
   }, [userData]);
 
   useEffect(() => {
