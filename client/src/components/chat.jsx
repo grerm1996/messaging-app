@@ -44,6 +44,7 @@ function Chat(props) {
       }
       // GET ALL MESSAGES BY OR FOR USER
       try {
+        await console.log(userData.username);
         const response = await fetch(
           `${config.backendUrl}/messages/${userData.username}`,
           {
