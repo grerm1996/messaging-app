@@ -11,6 +11,7 @@ let socket;
 
 function Chat(props) {
   const [userData, setUserData] = useState(null);
+  const [userMessages, setUserMessages] = useState(null);
   const [currentConvo, setCurrentConvo] = useState(null);
   const [convoMessages, setConvoMessages] = useState(null);
   const [friendAvatar, setFriendAvatar] = useState(null);
@@ -40,6 +41,29 @@ function Chat(props) {
         await setUserData(data);
       } catch (error) {
         console.error("Error fetching data:", error);
+      }
+      // GET ALL MESSAGES BY OR FOR USER
+      try {
+        const response = await fetch(
+          `${config.backendUrl}/messages/${userData.username}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Request failed");
+        }
+
+        const data = await response.json();
+        console.log(data);
+        await setUserMessages(data);
+      } catch (error) {
+        console.error("Error fetching user messages:", error);
       }
     }
     socket = io("http://localhost:3000");
