@@ -110,7 +110,6 @@ function Contacts(props) {
       if (!response.ok) {
         throw new Error("Request failed");
       }
-
       const data = await response.json();
       console.log("received data: ", data);
       props.setCurrentConvo(data.convoObj);

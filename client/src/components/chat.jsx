@@ -6,12 +6,14 @@ import Convo from "./convo";
 import io from "socket.io-client";
 import Avatar from "./avatar";
 import config from "../config.js";
+// import { Messages } from "../../../server/models.js";
 
 let socket;
 
 function Chat(props) {
   const [userData, setUserData] = useState(null);
   const [userMessages, setUserMessages] = useState(null);
+  const [unread, setUnread] = useState(null);
   const [currentConvo, setCurrentConvo] = useState(null);
   const [convoMessages, setConvoMessages] = useState(null);
   const [friendAvatar, setFriendAvatar] = useState(null);
@@ -102,6 +104,11 @@ function Chat(props) {
       }
     }
     getUserMessages();
+    let initialUnread = userMessages.filter(
+      (message) => message.read == false && message.sender !== userData.username
+    );
+    setUnread(initialUnread);
+    console.log(unread);
   }, [userData]);
 
   useEffect(() => {
