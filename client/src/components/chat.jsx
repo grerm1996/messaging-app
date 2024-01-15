@@ -104,12 +104,17 @@ function Chat(props) {
       }
     }
     getUserMessages();
-    /* let initialUnread = userMessages.filter(
-      (message) => message.read == false && message.sender !== userData.username
-    );
-    setUnread(initialUnread);
-    console.log("unread: ", unread); */
   }, [userData]);
+
+  useEffect(() => {
+    if (userMessages.length > 0) {
+      const unread = userMessages.filter(
+        (message) => !message.read && message.sender !== userData.username
+      );
+      setUnread(unread);
+      console.log("unread: ", unread);
+    }
+  }, [userMessages]);
 
   useEffect(() => {
     const htmlElement = document.documentElement;
