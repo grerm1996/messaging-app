@@ -104,11 +104,11 @@ function Chat(props) {
       }
     }
     getUserMessages();
-    let initialUnread = userMessages.filter(
+    /* let initialUnread = userMessages.filter(
       (message) => message.read == false && message.sender !== userData.username
     );
     setUnread(initialUnread);
-    console.log(unread);
+    console.log("unread: ", unread); */
   }, [userData]);
 
   useEffect(() => {
