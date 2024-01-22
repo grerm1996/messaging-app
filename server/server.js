@@ -21,6 +21,7 @@ const io = require("socket.io")(http, {
   },
 });
 const initializePassport = require("./passport-config");
+require("dotenv").config();
 const { instrument } = require("@socket.io/admin-ui");
 
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
@@ -85,14 +86,14 @@ app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: "https://grerm1996.github.io",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
   })
 );
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://grerm1996.github.io");
+  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
 
   // Allow credentials to be sent with the request
   res.header("Access-Control-Allow-Credentials", "true");
@@ -122,8 +123,8 @@ app.use(
     name: "session",
     keys: ["key1", "key2"],
     maxAge: 24 * 60 * 60 * 1000,
-    sameSite: "none",
-    secure: true,
+    /*    sameSite: "none",
+    secure: true, */
   })
 );
 app.use((req, res, next) => {

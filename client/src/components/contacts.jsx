@@ -89,7 +89,7 @@ function Contacts(props) {
     }
   };
 
-  const selectConvo = async (convoId) => {
+  const selectConvo = async (convoId, username) => {
     if (props.currentConvo && props.currentConvo.convoId === convoId) {
       console.log("already selected");
       return;
@@ -99,7 +99,7 @@ function Contacts(props) {
     }
     props.joinRoom(convoId);
     console.log(convoId);
-    try {
+    /*    try {
       const response = await fetch(`${config.backendUrl}/messages/${convoId}`, {
         method: "GET",
         headers: {
@@ -111,12 +111,29 @@ function Contacts(props) {
         throw new Error("Request failed");
       }
       const data = await response.json();
+      console.log("received data: ", data); */
+
+    props.setConvoMessages(
+      props.userMessages.filter((message) => message.convoId == convoId)
+    );
+    props.setCurrentConvo({ convoId, username });
+    // props.setFriendAvatar(data.friendAva);
+    props.setUnread({ ...props.unread, [username]: 0 });
+    try {
+      const response = await fetch(`${config.backendUrl}/messages/${convoId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
+      const data = await response.json();
       console.log("received data: ", data);
-      props.setCurrentConvo(data.convoObj);
-      props.setConvoMessages(data.messages);
-      props.setFriendAvatar(data.friendAva);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error marking messages as read:", error);
     }
   };
 
@@ -146,6 +163,9 @@ function Contacts(props) {
               onClick={() => selectConvo(contact.convoId, contact.username)}
             >
               {contact.username}
+              {props.unread[contact.username] > 0 && (
+                <span> ({props.unread[contact.username]})</span>
+              )}
             </span>
             <span
               className={style.deleteContactBtn}

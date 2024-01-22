@@ -69,7 +69,7 @@ function Register(props) {
           type="text"
           name="username"
           id="username"
-          minLength="4"
+          minLength="2"
           maxLength="12"
           onChange={(e) => setUsername(e.target.value)}
           required
@@ -80,7 +80,7 @@ function Register(props) {
           type="password"
           name="password"
           id="password"
-          minLength="4"
+          minLength="2"
           maxLength="12"
           pattern="[a-zA-Z0-9]+"
           onChange={(e) => setPassword(e.target.value)}

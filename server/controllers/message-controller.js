@@ -12,6 +12,7 @@ const getMessages = async (req, res) => {
     const messages = await Messages.find({ convoId: req.params.convoId }).sort({
       date: -1,
     });
+
     const convoObj = await Convos.findOne({ convoId: req.params.convoId });
     const friend = await Users.findOne({
       username: convoObj.participants.filter(
@@ -27,6 +28,21 @@ const getMessages = async (req, res) => {
   }
 };
 
+const getAllMessages = async (req, res) => {
+  console.log("getting all user messages");
+  try {
+    const allUserMessages = await Messages.find({
+      $or: [{ sender: req.user.username }, { recipient: req.user.username }],
+    }).sort({
+      date: -1,
+    });
+    return res.status(200).json(allUserMessages);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "An error occurred" });
+  }
+};
+
 const postMessage = async (req, res) => {
   try {
     console.log("req.user is:", req.user);
@@ -36,6 +52,7 @@ const postMessage = async (req, res) => {
       recipient: req.body.recipient,
       date: new Date(),
       convoId: req.body.convoId,
+      read: false,
     });
     console.log("here is your message draft:", newMessage);
     await newMessage.save();
@@ -46,4 +63,32 @@ const postMessage = async (req, res) => {
   }
 };
 
-module.exports = { checkAuthenticated, getMessages, postMessage };
+const markAsRead = async (req, res) => {
+  console.log(req.params);
+  try {
+    const filter = { convoId: req.params.convoId };
+    const update = { $set: { read: true } };
+    const newlyReadMessages = await Messages.updateMany(filter, update);
+
+    if (!newlyReadMessages) {
+      return res.status(404).json({ message: "No messages to mark as read" });
+    } else {
+      console.log("Updated messages:", newlyReadMessages);
+      res.json({
+        message: "User contacts updated successfully",
+        user: newlyReadMessages,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "An error occurred" });
+  }
+};
+
+module.exports = {
+  checkAuthenticated,
+  getMessages,
+  getAllMessages,
+  postMessage,
+  markAsRead,
+};

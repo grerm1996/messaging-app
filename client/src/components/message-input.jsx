@@ -4,9 +4,8 @@ import config from "../config.js";
 
 function MessageInput(props) {
   const [message, setMessage] = useState("");
-  let recipient = props.currentConvo.participants.find(
-    (user) => user !== props.userData.username
-  );
+  console.log(props.currentConvo);
+  let recipient = props.currentConvo.username;
 
   const sendMessage = async () => {
     if (!message) return;

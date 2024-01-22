@@ -18,12 +18,10 @@ const addContact = async (req, res) => {
         return res.status(404).json({ message: "User not found" });
       } else {
         console.log("Updated User:", updatedUser);
-        res
-          .status(200)
-          .json({
-            message: "User avatar updated successfully",
-            user: updatedUser,
-          });
+        res.status(200).json({
+          message: "User avatar updated successfully",
+          user: updatedUser,
+        });
       }
     } catch (error) {
       console.error(error);
@@ -31,7 +29,6 @@ const addContact = async (req, res) => {
     }
   } else {
     try {
-      console.log(req.sessionStore.sessions);
       const newContact = req.body.contact;
       let contactExists = await Users.findOne({ username: req.body.contact });
       if (!contactExists)
@@ -100,13 +97,11 @@ const addContact = async (req, res) => {
           return res.status(404).json({ message: "User not found" });
         } else {
           console.log("Updated User:", updatedUser);
-          res
-            .status(200)
-            .json({
-              message: "User contacts updated successfully",
-              user: updatedUser,
-              convoId: contactConvoId,
-            });
+          res.status(200).json({
+            message: "User contacts updated successfully",
+            user: updatedUser,
+            convoId: contactConvoId,
+          });
         }
       }
     } catch (error) {
@@ -118,7 +113,6 @@ const addContact = async (req, res) => {
 
 const removeContact = async (req, res) => {
   try {
-    console.log(req.body);
     const updatedUser = await Users.findByIdAndUpdate(
       req.user._id,
       {

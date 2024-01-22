@@ -12,8 +12,8 @@ let socket;
 
 function Chat(props) {
   const [userData, setUserData] = useState(null);
-  const [userMessages, setUserMessages] = useState(null);
-  const [unread, setUnread] = useState(null);
+  const [userMessages, setUserMessages] = useState([]);
+  const [unread, setUnread] = useState({});
   const [currentConvo, setCurrentConvo] = useState(null);
   const [convoMessages, setConvoMessages] = useState(null);
   const [friendAvatar, setFriendAvatar] = useState(null);
@@ -77,42 +77,47 @@ function Chat(props) {
     async function getUserMessages() {
       if (userData) {
         socket.emit("add-as-online", userData.username);
-      }
-      // GET ALL MESSAGES BY OR FOR USER
-      try {
-        await console.log(userData.username);
-        const response = await fetch(
-          `${config.backendUrl}/messages/${userData.username}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
+
+        // GET ALL MESSAGES BY OR FOR USER
+        try {
+          await console.log(userData.username);
+          const response = await fetch(
+            `${config.backendUrl}/messages/${userData.username}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              credentials: "include",
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Request failed");
           }
-        );
 
-        if (!response.ok) {
-          throw new Error("Request failed");
+          const data = await response.json();
+          console.log("retrieved data: ", data);
+          await setUserMessages(data);
+        } catch (error) {
+          console.error("Error fetching user messages:", error);
         }
-
-        const data = await response.json();
-        console.log(data);
-        await setUserMessages(data);
-      } catch (error) {
-        console.error("Error fetching user messages:", error);
       }
     }
     getUserMessages();
   }, [userData]);
 
   useEffect(() => {
-    if (userMessages.length > 0) {
-      const unread = userMessages.filter(
-        (message) => !message.read && message.sender !== userData.username
-      );
-      setUnread(unread);
-      console.log("unread: ", unread);
+    //SET "UNREAD MESSAGES" ARRAY
+    let unreadTemp = {};
+    if (userMessages && Array.isArray(userMessages)) {
+      userMessages.forEach((message) => {
+        if (!message.read && message.sender !== userData.username) {
+          unreadTemp[message.sender] = (unreadTemp[message.sender] || 0) + 1;
+        }
+      });
+      setUnread(unreadTemp);
+      console.log("unread: ", unreadTemp);
     }
   }, [userMessages]);
 
@@ -216,6 +221,9 @@ function Chat(props) {
               darkMode={darkMode}
               toggleDarkMode={toggleDarkMode}
               setFriendAvatar={setFriendAvatar}
+              userMessages={userMessages}
+              unread={unread}
+              setUnread={setUnread}
             />
             <div className={style["nav-bottom"]}>
               <button className={style.logout} onClick={handleLogout}>
