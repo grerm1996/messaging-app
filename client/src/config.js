@@ -1,5 +1,5 @@
 const config = {
-  backendUrl: "http://localhost:4000",
+  backendUrl: "https://messaging-app-thrumming-wildflower-8588.fly.dev",
 };
 ("");
 // https://messaging-app-thrumming-wildflower-8588.fly.dev
