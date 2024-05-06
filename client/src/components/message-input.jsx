@@ -1,5 +1,5 @@
 import style from "./message-input.module.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import config from "../config.js";
 
 function MessageInput(props) {
@@ -44,6 +44,8 @@ function MessageInput(props) {
 
     setMessage("");
     props.sendMessage(messageObj, props.currentConvo.convoId);
+    props.setConvoMessages((prevArr) => [...prevArr, messageObj]);
+    props.setUserMessages((prevArr) => [...prevArr, messageObj]);
   };
 
   function handleKeyDown(e) {

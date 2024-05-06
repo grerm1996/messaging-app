@@ -41,7 +41,7 @@ function App() {
     <Chat checkAuthenticity={checkAuthenticity} />
   ) : (
     <div className="login-container">
-      <p>{config.backendUrl}</p>
+      <p style={{ display: "none" }}>{config.backendUrl}</p>
       {displayRegister ? (
         <Register
           toggleDisplay={() => setDisplayRegister((prev) => !prev)}

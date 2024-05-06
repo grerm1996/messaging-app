@@ -252,6 +252,8 @@ function Chat(props) {
                   currentConvo={currentConvo}
                   userData={userData}
                   sendMessage={sendMessage}
+                  setConvoMessages={setConvoMessages}
+                  setUserMessages={setUserMessages}
                 />
               </div>
             ) : userData.contacts.length > 0 ? (
