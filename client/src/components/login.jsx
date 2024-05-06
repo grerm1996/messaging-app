@@ -1,6 +1,6 @@
 import style from "./login.module.css";
 import { useState } from "react";
-import config from "../config";
+import deployMode from "../../../deploymode";
 
 function Login(props) {
   const [username, setUsername] = useState("");
@@ -12,7 +12,7 @@ function Login(props) {
     setErrorMessage("");
 
     try {
-      const response = await fetch(`${config.backendUrl}/login`, {
+      const response = await fetch(`${deployMode.backendUrl}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

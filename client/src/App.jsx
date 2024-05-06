@@ -3,14 +3,14 @@ import "./App.css";
 import Register from "./components/register";
 import Login from "./components/login";
 import Chat from "./components/chat";
-import config from "./config";
+import deployMode from "../../deploymode";
 
 function App() {
   const [displayRegister, setDisplayRegister] = useState(false);
   const [authentication, setAuthentication] = useState(null);
 
   const checkAuthenticity = () => {
-    fetch(`${config.backendUrl}/authenticate`, {
+    fetch(`${deployMode.backendUrl}/authenticate`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +41,7 @@ function App() {
     <Chat checkAuthenticity={checkAuthenticity} />
   ) : (
     <div className="login-container">
-      <p style={{ display: "none" }}>{config.backendUrl}</p>
+      <p style={{ display: "none" }}>{deployMode.backendUrl}</p>
       {displayRegister ? (
         <Register
           toggleDisplay={() => setDisplayRegister((prev) => !prev)}

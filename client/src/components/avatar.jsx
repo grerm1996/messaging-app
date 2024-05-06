@@ -1,6 +1,6 @@
 import style from "./avatar.module.css";
 import { useState, useEffect, useRef } from "react";
-import config from "../config.js";
+import deployMode from "../deploymode.js";
 
 function Avatar(props) {
   const [listVisible, setListVisible] = useState(false);
@@ -30,7 +30,7 @@ function Avatar(props) {
   const selectAvatar = async (num) => {
     try {
       const response = await fetch(
-        `${config.backendUrl}/contacts/add/${props.userData._id}`,
+        `${deployMode.backendUrl}/contacts/add/${props.userData._id}`,
         {
           method: "PUT",
           headers: {

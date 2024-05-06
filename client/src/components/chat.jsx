@@ -5,7 +5,7 @@ import Contacts from "./contacts";
 import Convo from "./convo";
 import io from "socket.io-client";
 import Avatar from "./avatar";
-import config from "../config.js";
+import deployMode from "../../../deploymode";
 // import { Messages } from "../../../server/models.js";
 
 let socket;
@@ -26,7 +26,7 @@ function Chat(props) {
   useEffect(() => {
     async function getUserData() {
       try {
-        const response = await fetch(`${config.backendUrl}/login/user`, {
+        const response = await fetch(`${deployMode.backendUrl}/login/user`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -82,7 +82,7 @@ function Chat(props) {
         try {
           await console.log(userData.username);
           const response = await fetch(
-            `${config.backendUrl}/messages/${userData.username}`,
+            `${deployMode.backendUrl}/messages/${userData.username}`,
             {
               method: "GET",
               headers: {
@@ -142,7 +142,7 @@ function Chat(props) {
 
   const handleLogout = async (e) => {
     try {
-      const response = await fetch(`${config.backendUrl}/login/logout`, {
+      const response = await fetch(`${deployMode.backendUrl}/login/logout`, {
         method: "DELETE",
         credentials: "include",
       });

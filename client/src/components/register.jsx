@@ -1,6 +1,6 @@
 import style from "./register.module.css";
 import { useState } from "react";
-import config from "../config.js";
+import deployMode from "../../../deploymode.js";
 
 function Register(props) {
   const [errorMessage, setErrorMessage] = useState(" ");
@@ -17,14 +17,17 @@ function Register(props) {
       );
     } else {
       try {
-        const response = await fetch(`${config.backendUrl}/login/register`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({ username, password }),
-        });
+        const response = await fetch(
+          `${deployMode.backendUrl}/login/register`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({ username, password }),
+          }
+        );
 
         if (response.ok) {
           props.checkAuthenticity();

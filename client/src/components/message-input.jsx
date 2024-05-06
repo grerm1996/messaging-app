@@ -1,6 +1,6 @@
 import style from "./message-input.module.css";
 import { useState } from "react";
-import config from "../config.js";
+import deployMode from "../../../deploymode.js";
 
 function MessageInput(props) {
   const [message, setMessage] = useState("");
@@ -18,7 +18,7 @@ function MessageInput(props) {
     };
     try {
       const response = await fetch(
-        `${config.backendUrl}/messages/${props.currentConvo.convoId}}`,
+        `${deployMode.backendUrl}/messages/${props.currentConvo.convoId}}`,
         {
           method: "POST",
           headers: {

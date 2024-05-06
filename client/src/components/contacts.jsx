@@ -1,7 +1,7 @@
 import { useState } from "react";
 import style from "./contacts.module.css";
 import PropTypes from "prop-types";
-import config from "../config";
+import deployMode from "../../../deploymode";
 
 function Contacts(props) {
   const [newContactName, setNewContactName] = useState("");
@@ -13,7 +13,7 @@ function Contacts(props) {
     console.log(props.userData._id);
     try {
       const response = await fetch(
-        `${config.backendUrl}/contacts/add/${props.userData._id}`,
+        `${deployMode.backendUrl}/contacts/add/${props.userData._id}`,
         {
           method: "PUT",
           headers: {
@@ -56,7 +56,7 @@ function Contacts(props) {
     console.log(contactToDelete);
     try {
       const response = await fetch(
-        `${config.backendUrl}/contacts/remove/${props.userData._id}`,
+        `${deployMode.backendUrl}/contacts/remove/${props.userData._id}`,
         {
           method: "PUT",
           headers: {
@@ -100,7 +100,7 @@ function Contacts(props) {
     props.joinRoom(convoId);
     console.log(convoId);
     /*    try {
-      const response = await fetch(`${config.backendUrl}/messages/${convoId}`, {
+      const response = await fetch(`${deployMode.backendUrl}/messages/${convoId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -120,13 +120,16 @@ function Contacts(props) {
     // props.setFriendAvatar(data.friendAva);
     props.setUnread({ ...props.unread, [username]: 0 });
     try {
-      const response = await fetch(`${config.backendUrl}/messages/${convoId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${deployMode.backendUrl}/messages/${convoId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
       if (!response.ok) {
         throw new Error("Request failed");
       }
