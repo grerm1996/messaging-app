@@ -1,7 +1,7 @@
 import { useState } from "react";
 import style from "./contacts.module.css";
 import PropTypes from "prop-types";
-import deployMode from "../../../deploymode";
+import deployMode from "../../deploymode";
 
 function Contacts(props) {
   const [newContactName, setNewContactName] = useState("");

@@ -1,6 +1,6 @@
 import style from "./register.module.css";
 import { useState } from "react";
-import deployMode from "../../../deploymode.js";
+import deployMode from "../../deploymode.js";
 
 function Register(props) {
   const [errorMessage, setErrorMessage] = useState(" ");

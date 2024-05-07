@@ -1,6 +1,6 @@
 import style from "./message-input.module.css";
 import { useState } from "react";
-import deployMode from "../../../deploymode.js";
+import deployMode from "../../deploymode.js";
 
 function MessageInput(props) {
   const [message, setMessage] = useState("");

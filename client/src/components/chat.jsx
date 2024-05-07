@@ -5,7 +5,7 @@ import Contacts from "./contacts";
 import Convo from "./convo";
 import io from "socket.io-client";
 import Avatar from "./avatar";
-import deployMode from "../../../deploymode";
+import deployMode from "../../deploymode";
 // import { Messages } from "../../../server/models.js";
 
 let socket;

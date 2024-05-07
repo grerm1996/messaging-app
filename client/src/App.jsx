@@ -3,7 +3,7 @@ import "./App.css";
 import Register from "./components/register";
 import Login from "./components/login";
 import Chat from "./components/chat";
-import deployMode from "../../deploymode";
+import deployMode from "../deploymode";
 
 function App() {
   const [displayRegister, setDisplayRegister] = useState(false);

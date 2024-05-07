@@ -1,6 +1,6 @@
 import style from "./login.module.css";
 import { useState } from "react";
-import deployMode from "../../../deploymode";
+import deployMode from "../../deploymode";
 
 function Login(props) {
   const [username, setUsername] = useState("");
