@@ -1,6 +1,6 @@
 import style from "./avatar.module.css";
 import { useState, useEffect, useRef } from "react";
-import deployMode from "../deploymode.js";
+import deployMode from "../../../deploymode.js";
 
 function Avatar(props) {
   const [listVisible, setListVisible] = useState(false);
