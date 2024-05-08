@@ -44,8 +44,7 @@ function MessageInput(props) {
 
     setMessage("");
     props.sendMessage(messageObj, props.currentConvo.convoId);
-    props.setConvoMessages((prevArr) => [messageObj, ...prevArr]);
-    props.setUserMessages((prevArr) => [messageObj, ...prevArr]);
+    // props.setConvoMessages((prevArr) => [messageObj, ...prevArr]);
   };
 
   function handleKeyDown(e) {
