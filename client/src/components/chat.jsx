@@ -54,7 +54,7 @@ function Chat(props) {
     socket.on("chat-message-out", (msg) => {
       console.log("incoming message thru socket: ", msg);
       setConvoMessages((prevMessages) => [msg, ...prevMessages]);
-      setUserMessages((prevArr) => [messageObj, ...prevArr]);
+      setUserMessages((prevArr) => [msg, ...prevArr]);
     });
 
     getUserData();
