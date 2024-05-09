@@ -7,8 +7,14 @@ function Login(props) {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  function loginDemo() {
+    setUsername("demo-guest");
+    setPassword("demo-guest");
+    handleLogin();
+  }
+
   const handleLogin = async (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     setErrorMessage("");
 
     try {
@@ -68,6 +74,10 @@ function Login(props) {
         <button type="submit">Log in</button>
       </form>
       {errorMessage ? <p className={style.error}>{errorMessage}</p> : null}
+      <p className="demo-login">
+        or <a onClick={() => loginDemo()}>click here</a> to log into a demo
+        account
+      </p>
     </div>
   );
 }

@@ -89,7 +89,7 @@ function Contacts(props) {
     }
   };
 
-  const selectConvo = async (convoId, username) => {
+  const selectConvo = async (convoId, username, avatar) => {
     if (props.currentConvo && props.currentConvo.convoId === convoId) {
       console.log("already selected");
       return;
@@ -116,7 +116,7 @@ function Contacts(props) {
     props.setConvoMessages(
       props.userMessages.filter((message) => message.convoId == convoId)
     );
-    props.setCurrentConvo({ convoId, username });
+    props.setCurrentConvo({ convoId, username, avatar });
     // props.setFriendAvatar(data.friendAva);
     props.setUnread({ ...props.unread, [username]: 0 });
     try {
@@ -163,7 +163,9 @@ function Contacts(props) {
             {}
             <span
               className={style["contact-clickable"]}
-              onClick={() => selectConvo(contact.convoId, contact.username)}
+              onClick={() =>
+                selectConvo(contact.convoId, contact.username, contact.avatar)
+              }
             >
               {contact.username}
               {props.unread[contact.username] > 0 && (

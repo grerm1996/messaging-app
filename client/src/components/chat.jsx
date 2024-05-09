@@ -16,7 +16,6 @@ function Chat(props) {
   const [unread, setUnread] = useState({});
   const [currentConvo, setCurrentConvo] = useState(null);
   const [convoMessages, setConvoMessages] = useState(null);
-  const [friendAvatar, setFriendAvatar] = useState(null);
   const [onlineFriends, setOnlineFriends] = useState(null);
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("darkMode") !== "true"
@@ -225,7 +224,6 @@ function Chat(props) {
               onlineFriends={onlineFriends}
               darkMode={darkMode}
               toggleDarkMode={toggleDarkMode}
-              setFriendAvatar={setFriendAvatar}
               userMessages={userMessages}
               unread={unread}
               setUnread={setUnread}
@@ -251,7 +249,6 @@ function Chat(props) {
                   currentConvo={currentConvo}
                   convoMessages={convoMessages}
                   userData={userData}
-                  friendAvatar={friendAvatar}
                 />
                 <MessageInput
                   currentConvo={currentConvo}
