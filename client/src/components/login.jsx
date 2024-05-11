@@ -1,17 +1,22 @@
 import style from "./login.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import deployMode from "../../deploymode";
 
 function Login(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [demoLogin, setDemoLogin] = useState(false);
 
-  function loginDemo() {
-    setUsername("demo-guest");
-    setPassword("demo-guest");
-    handleLogin();
+  async function loginDemo() {
+    await Promise.all([setUsername("demo"), setPassword("demo")]);
+    setDemoLogin(true);
+    console.log(username, "logged in");
   }
+
+  useEffect(() => {
+    if (demoLogin) handleLogin();
+  }, [demoLogin]);
 
   const handleLogin = async (e) => {
     if (e) e.preventDefault();
@@ -62,6 +67,7 @@ function Login(props) {
           type="text"
           name="username"
           onChange={(e) => setUsername(e.target.value)}
+          value={username}
         />
 
         <label htmlFor="password">Password:</label>
@@ -69,6 +75,7 @@ function Login(props) {
           type="password"
           name="password"
           onChange={(e) => setPassword(e.target.value)}
+          value={password}
         />
 
         <button type="submit">Log in</button>

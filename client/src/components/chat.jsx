@@ -22,6 +22,12 @@ function Chat(props) {
   );
   const [menuVisibility, setMenuVisibility] = useState(false);
 
+  const currentConvoRef = useRef(currentConvo); // Initialize ref with initial value
+
+  useEffect(() => {
+    currentConvoRef.current = currentConvo;
+  }, [currentConvo]);
+
   useEffect(() => {
     async function getUserData() {
       try {
@@ -50,10 +56,38 @@ function Chat(props) {
         : "http://localhost:3000"
     );
 
-    socket.on("chat-message-out", (msg) => {
+    socket.on("chat-message-out", async (msg) => {
       console.log("incoming message thru socket: ", msg);
-      setConvoMessages((prevMessages) => [msg, ...prevMessages]);
-      setUserMessages((prevArr) => [msg, ...prevArr]);
+
+      if (
+        currentConvoRef.current &&
+        currentConvoRef.current.convoId === msg.convoId
+      ) {
+        msg.read = true;
+        setConvoMessages((prevArr) => [msg, ...prevArr]);
+        setUserMessages((prevArr) => [msg, ...prevArr]);
+        try {
+          const response = await fetch(
+            `${deployMode.backendUrl}/messages/${msg.convoId}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              credentials: "include",
+            }
+          );
+          if (!response.ok) {
+            throw new Error("Request failed");
+          }
+          const data = await response.json();
+          console.log("received data: ", data);
+        } catch (error) {
+          console.error("Error marking messages as read:", error);
+        }
+      } else {
+        setUserMessages((prevArr) => [msg, ...prevArr]);
+      }
     });
 
     getUserData();
@@ -109,6 +143,11 @@ function Chat(props) {
       }
     }
     getUserMessages();
+    if (userData) {
+      userData.contacts.forEach((contact) => {
+        joinRoom(contact.convoId);
+      });
+    }
   }, [userData]);
 
   useEffect(() => {
@@ -225,6 +264,7 @@ function Chat(props) {
               darkMode={darkMode}
               toggleDarkMode={toggleDarkMode}
               userMessages={userMessages}
+              setUserMessages={setUserMessages}
               unread={unread}
               setUnread={setUnread}
             />

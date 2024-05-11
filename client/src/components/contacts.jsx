@@ -94,10 +94,10 @@ function Contacts(props) {
       console.log("already selected");
       return;
     }
-    if (props.currentConvo) {
+    /*     if (props.currentConvo) {
       props.exitRoom(props.currentConvo.convoId);
     }
-    props.joinRoom(convoId);
+    props.joinRoom(convoId); */
     console.log(convoId);
     /*    try {
       const response = await fetch(`${deployMode.backendUrl}/messages/${convoId}`, {
@@ -116,8 +116,14 @@ function Contacts(props) {
     props.setConvoMessages(
       props.userMessages.filter((message) => message.convoId == convoId)
     );
+    let updatedUserMessages = props.userMessages.map((msg) => {
+      if (msg && !msg.read) {
+        msg.read = true;
+      }
+      return msg;
+    });
+    props.setUserMessages(updatedUserMessages);
     props.setCurrentConvo({ convoId, username, avatar });
-    // props.setFriendAvatar(data.friendAva);
     props.setUnread({ ...props.unread, [username]: 0 });
     try {
       const response = await fetch(
