@@ -40,9 +40,13 @@ function Convo(props) {
                   className={style.friendava}
                 />
               ) : null}
-              <p data-date={message.date} data-index={index}>
-                {message.msgtext}
-              </p>
+              {message.image ? (
+                <img src={message.msgtext} className={style.textedimage} />
+              ) : (
+                <p data-date={message.date} data-index={index}>
+                  {message.msgtext}
+                </p>
+              )}
             </div>
           </div>
         ))}

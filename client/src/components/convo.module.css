@@ -77,3 +77,9 @@
 .date-marker p {
   background: var(--clr-secondary);
 }
+
+.textedimage {
+  width: 60%;
+  height: 100%;
+  margin: 8px;
+}

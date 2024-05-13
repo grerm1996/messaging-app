@@ -6,6 +6,9 @@
 
 .messageinput {
   margin-top: 10px;
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 @media (max-width: 768px) {
@@ -14,4 +17,9 @@
     height: 10vh;
     bottom: 3px;
   }
+}
+
+.imagebutton {
+  position: absolute;
+  cursor: pointer;
 }

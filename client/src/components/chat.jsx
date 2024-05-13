@@ -99,9 +99,7 @@ function Chat(props) {
     socket.on("receive-online-users", (users) => {
       console.log("receiving online users: ", users);
       let usersArr = [];
-      for (const key in users) {
-        if (users.hasOwnProperty(key)) usersArr.push(users[key]);
-      }
+      for (const key in users) usersArr.push(users[key]);
       setOnlineFriends(usersArr);
     });
 

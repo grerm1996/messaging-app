@@ -50,11 +50,11 @@ function Avatar(props) {
         setListVisible(false);
       } else {
         const errorData = await response.json();
-        return setErrorMessage(errorData.message);
+        return console.log(errorData.message);
       }
     } catch (error) {
       console.error("Error during add contact:", error);
-      setErrorMessage(error);
+      console.log(error);
     }
   };
 
