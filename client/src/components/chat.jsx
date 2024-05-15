@@ -282,7 +282,13 @@ function Chat(props) {
           </nav>
           <div className={style.mainarea}>
             {currentConvo ? (
-              <div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
                 <Convo
                   currentConvo={currentConvo}
                   convoMessages={convoMessages}

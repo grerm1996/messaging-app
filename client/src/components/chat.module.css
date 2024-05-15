@@ -15,6 +15,8 @@
   padding: 0px 10px;
   color: var(--clr-dark);
   transition: left 0.2s ease;
+
+  z-index: 5;
 }
 
 .menu-button {

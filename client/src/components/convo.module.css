@@ -56,7 +56,7 @@
   color: black;
 }
 
-.received-text p {
+.received-text :is(p, .textedimage) {
   background-color: var(--clr-received);
   grid-column: 2/3;
   justify-self: left;

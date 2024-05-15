@@ -2,13 +2,14 @@
   font-size: 1.4rem;
   background: var(--clr-light);
   color: var(--clr-dark);
+  width: 100%;
 }
 
 .messageinput {
   margin-top: 10px;
   position: relative;
   display: flex;
-  justify-content: center;
+  width: fit-content;
 }
 
 @media (max-width: 768px) {
@@ -20,6 +21,9 @@
 }
 
 .imagebutton {
-  position: absolute;
   cursor: pointer;
+  position: absolute;
+  top: 2px;
+  right: 0px;
+  z-index: 3;
 }
