@@ -4,7 +4,7 @@ import deployMode from "../../deploymode.js";
 
 function Avatar(props) {
   const [listVisible, setListVisible] = useState(false);
-  const avaNumbers = [1, 2, 3, 4, 5];
+  const avaNumbers = [1, 2, 3, 4, 5, 6];
   const [previewAvatar, setPreviewAvatar] = useState(props.userData.avatar);
 
   const avaMenu = useRef(null);

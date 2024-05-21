@@ -6,6 +6,7 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 function MessageInput(props) {
   const [message, setMessage] = useState("");
   const [file, setFile] = useState("");
+  const [imageLoading, setImageLoading] = useState(false);
 
   let recipient = props.currentConvo.username;
 
@@ -58,6 +59,7 @@ function MessageInput(props) {
   async function handleImageUpload(e) {
     const target = e.target.files[0];
     setFile(target);
+    setImageLoading(true);
   }
   useEffect(() => {
     async function submitImage() {
@@ -102,23 +104,26 @@ function MessageInput(props) {
       } catch (error) {
         console.error("Error sending message:", error);
       }
+      setImageLoading(false);
     }
     submitImage();
   }, [file]);
 
   return (
     <div className={style.messageinput}>
+      <div className={imageLoading ? style.spinner : ""}></div>
       <form>
         <textarea
           className={style.textarea}
           value={message}
+          disabled={imageLoading}
           name="message-text"
           id="message-text-area"
           cols="40"
           rows="3"
           onKeyDown={handleKeyDown}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder={`Send message to ${recipient} here`}
+          placeholder={imageLoading ? "" : `Send message to ${recipient} here`}
         ></textarea>
         <label htmlFor="image-input" className={style.imagebutton}>
           <input

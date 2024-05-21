@@ -1,5 +1,5 @@
 import style from "./login.module.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import deployMode from "../../deploymode";
 
 function Login(props) {
@@ -7,6 +7,7 @@ function Login(props) {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [demoLogin, setDemoLogin] = useState(false);
+  const dialogRef = useRef(null);
 
   async function loginDemo() {
     await Promise.all([setUsername("demo"), setPassword("demo")]);
@@ -47,6 +48,10 @@ function Login(props) {
     } catch (error) {
       console.error("Error during login:", error);
     }
+  };
+
+  const showModal = () => {
+    dialogRef.current.showModal();
   };
 
   return (
