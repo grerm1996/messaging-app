@@ -42,7 +42,7 @@
   box-shadow: 1px 1px black;
 }
 
-.contact-list li:hover {
+.contact-clickable:hover {
   cursor: pointer;
 }
 
@@ -103,4 +103,18 @@
 
 .error {
   color: var(--clr-error);
+}
+
+.edit-contacts-button {
+  font-size: 0.1rem;
+}
+
+.edit-contacts-button:hover {
+  cursor: pointer;
+}
+
+.delete-contacts-button {
+  background: rgba(255, 0, 0, 0.473);
+  padding: 5px;
+  font-weight: 900;
 }

@@ -2,10 +2,13 @@ import { useState } from "react";
 import style from "./contacts.module.css";
 import PropTypes from "prop-types";
 import deployMode from "../../deploymode";
+import EditIcon from "@mui/icons-material/Edit";
 
 function Contacts(props) {
   const [newContactName, setNewContactName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [editContactVisible, setEditContactVisible] = useState("");
+  const [toDelete, setToDelete] = useState([]);
 
   const handleAddContact = async (e) => {
     e.preventDefault();
@@ -51,9 +54,9 @@ function Contacts(props) {
     setNewContactName("");
   };
 
-  const deleteContact = async (contactToDelete) => {
+  const deleteContact = async () => {
     setErrorMessage("");
-    console.log(contactToDelete);
+    console.log("removing from contacts: ", toDelete);
     try {
       const response = await fetch(
         `${deployMode.backendUrl}/contacts/remove/${props.userData._id}`,
@@ -64,7 +67,7 @@ function Contacts(props) {
             Accept: "application/json",
           },
           credentials: "include",
-          body: JSON.stringify({ contact: contactToDelete }),
+          body: JSON.stringify({ contacts: toDelete }),
         }
       );
 
@@ -72,14 +75,18 @@ function Contacts(props) {
         const responseData = await response.json();
         console.log(responseData);
         console.log("your contact list: ", responseData.user.contacts);
-        const newArray = props.userData.contacts;
+        props.setUserData((prev) => ({
+          ...prev,
+          contacts: responseData.user.contacts,
+        }));
+        /*         const newArray = props.userData.contacts;
         const indexToRemove = newArray.findIndex(
           (contact) => contact.username === contactToDelete
         );
         if (indexToRemove !== -1) {
           newArray.splice(indexToRemove, 1);
           props.setUserData({ ...props.userData, contacts: newArray });
-        }
+        } */
       } else {
         const errorData = await response.json();
         return console.log(errorData.message); // Assuming the JSON contains an "error" field
@@ -146,9 +153,32 @@ function Contacts(props) {
     }
   };
 
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+
+    setToDelete((prev) => {
+      if (checked) {
+        return [...prev, name];
+      } else {
+        return prev.filter((item) => item !== name);
+      }
+    });
+  };
+
   return (
     <div className={style.contacts}>
-      <label>Contacts:</label>
+      <div>
+        <label>Contacts: </label>
+        <EditIcon
+          className={style["edit-contacts-button"]}
+          style={{
+            color: editContactVisible ? "var(--clr-edit)" : "",
+          }}
+          aria-label="edit contacts button"
+          onClick={() => setEditContactVisible((prev) => !prev)}
+          sx={{ fontSize: 17 }}
+        />
+      </div>
       <ul className={style["contact-list"]}>
         {props.userData.contacts.map((contact) => (
           <li key={contact._id}>
@@ -178,16 +208,33 @@ function Contacts(props) {
                 <span> ({props.unread[contact.username]})</span>
               )}
             </span>
-            <span
+            {/*             <span
               className={style.deleteContactBtn}
               onClick={({}) => deleteContact(contact.username)}
             >
               {" "}
               ×
-            </span>
+            </span> */}
+            {editContactVisible ? (
+              <input
+                type="checkbox"
+                name={contact.username}
+                onChange={handleCheckboxChange}
+              ></input>
+            ) : (
+              ""
+            )}
           </li>
         ))}
       </ul>
+
+      <button
+        className={style["delete-contacts-button"]}
+        style={{ visibility: editContactVisible ? "visible" : "hidden" }}
+        onClick={deleteContact}
+      >
+        Remove contacts
+      </button>
       <form className={style.contacts} autoComplete="off">
         <input
           id={style["add-contact"]}
