@@ -1,6 +1,6 @@
 const deployMode = {
-  backendUrl: "http://localhost:4000",
-  on: false,
+  backendUrl: "https://messaging-app-thrumming-wildflower-8588.fly.dev",
+  on: true,
 };
 ("");
 // https://messaging-app-thrumming-wildflower-8588.fly.dev
