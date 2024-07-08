@@ -9,6 +9,12 @@ function App() {
   const [displayRegister, setDisplayRegister] = useState(false);
   const [authentication, setAuthentication] = useState(null);
 
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js");
+    });
+  }
+
   const checkAuthenticity = () => {
     fetch(`${deployMode.backendUrl}/authenticate`, {
       method: "GET",
