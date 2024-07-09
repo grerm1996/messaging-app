@@ -10,10 +10,17 @@ export default defineConfig({
       // generates 'manifest.webmanifest' file on build
       manifest: {
         // caches the assets/icons mentioned (assets/* includes all the assets present in your src/ directory)
-        includeAssets: ["favicon.ico", "apple-touch-icon.png", "assets/*"],
+        includeAssets: [
+          "favicon.ico",
+          "apple-touch-icon.png",
+          "assets/*",
+          "*.png",
+          "*.svg",
+        ],
         name: "chatapp",
         short_name: "chatapp",
         start_url: "https://grerm1996.github.io/messaging-app/messaging-app/",
+
         background_color: "#ffffff",
         theme_color: "#000000",
         icons: [
