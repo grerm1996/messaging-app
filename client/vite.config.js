@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
+import deployMode from "./deploymode";
 
 export default defineConfig({
   plugins: [
@@ -19,8 +20,9 @@ export default defineConfig({
         ],
         name: "chatapp",
         short_name: "chatapp",
-        start_url: "https://grerm1996.github.io/messaging-app/messaging-app/",
-
+        start_url: deployMode.on
+          ? "https://grerm1996.github.io/messaging-app/"
+          : "/messaging-app/",
         background_color: "#ffffff",
         theme_color: "#000000",
         icons: [
