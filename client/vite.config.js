@@ -13,8 +13,7 @@ export default defineConfig({
         includeAssets: ["favicon.ico", "apple-touch-icon.png", "assets/*"],
         name: "chatapp",
         short_name: "chatapp",
-        start_url: "/messaging-app/",
-        scope: "/messaging-app/",
+        start_url: "https://grerm1996.github.io/messaging-app/messaging-app/",
         background_color: "#ffffff",
         theme_color: "#000000",
         icons: [
